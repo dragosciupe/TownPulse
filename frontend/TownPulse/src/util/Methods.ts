@@ -44,8 +44,10 @@ export function checkFieldForError(
     }
 
     case "email": {
-      if (value.length === 0) return "Email is mandatory";
+      const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const isEmailValid = emailRegex.test(value);
 
+      if (!isEmailValid) return "Email is invalid";
       return "";
     }
 
