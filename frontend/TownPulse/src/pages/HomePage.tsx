@@ -13,7 +13,7 @@ function HomePage() {
             key={ev.id}
             id={ev.id}
             title={ev.title}
-            img={imd}
+            img={ev.img}
             date={new Date(ev.date)}
             desc={ev.desc}
             city={ev.city}
