@@ -1,0 +1,50 @@
+#events {
+    width: 90%;
+    max-width: 90%;
+    list-style: none;
+    margin: 2rem auto;
+    padding: 1rem;
+  }
+  
+  .event {
+    width: 60%;
+    margin: 0 auto 7rem; /* Increase the margin to add more space between items */
+    background-color: #456e39;
+    border-radius: 1rem;
+    border: 40px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+  }
+  
+  .event article {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .event img {
+    width: 100%;
+    height: 20rem;
+    object-fit: cover;
+  }
+  
+  .event h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0.75rem 0;
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+  
+  .event p {
+    margin: 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  h1{
+    color: white;
+    text-align: center;
+    
+  }
