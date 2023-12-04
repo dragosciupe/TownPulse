@@ -4,11 +4,15 @@ import RootLayout from "./pages/RootLayout.tsx";
 import HomePage from "./pages/HomePage.tsx";
 import EventsCalendarPage from "./pages/EventsCalendarPage.tsx";
 import AddEventPage from "./pages/AddEventPage.tsx";
-import ProfilePage from "./pages/ProfilePage.tsx";
+import RootProfileLayout from "./pages/RootProfileLayout.tsx";
 import AuthenticationPage, {
   action as authAction,
 } from "./pages/AuthenticationPage.tsx";
 import { authLoader, logoutAction } from "./util/Methods.ts";
+import { creatorRequestAction } from "./pages/CreatorAccountPage.tsx";
+import CreatorAccountPage from "./pages/CreatorAccountPage.tsx";
+import AccountDetailsPage from "./pages/AccountDetailsPage.tsx";
+import SavedEventsPage from "./pages/SavedEventsPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +24,19 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: "/eventsCalendar", element: <EventsCalendarPage /> },
       { path: "/addEvent", element: <AddEventPage /> },
-      { path: "/profile", element: <ProfilePage /> },
+      {
+        path: "/profile",
+        element: <RootProfileLayout />,
+        children: [
+          { index: true, element: <AccountDetailsPage /> },
+          { path: "savedEvents", element: <SavedEventsPage /> },
+          {
+            path: "creatorAccountPage",
+            element: <CreatorAccountPage />,
+            action: creatorRequestAction,
+          },
+        ],
+      },
       {
         path: "/authentication",
         element: <AuthenticationPage />,
