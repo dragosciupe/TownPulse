@@ -11,3 +11,11 @@ export type UserData = {
   email: string;
   accountType: AccountType;
 };
+export type EventProps ={
+  id: string;
+  title: string;
+  img: string;
+  desc:string;
+  date: Date;
+  city: string;
+}

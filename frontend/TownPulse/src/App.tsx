@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage.tsx";
 import EventsCalendarPage from "./pages/EventsCalendarPage.tsx";
 import AddEventPage from "./pages/AddEventPage.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
+import './Index.css'
 import AuthenticationPage, {
   action as authAction,
 } from "./pages/AuthenticationPage.tsx";
