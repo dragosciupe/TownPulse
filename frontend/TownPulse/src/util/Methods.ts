@@ -1,3 +1,4 @@
+import { LoaderFunction, redirect } from "react-router-dom";
 import {
   MIN_USERNAME_LENGTH,
   MAX_USERNAME_LENGTH,
@@ -43,8 +44,10 @@ export function checkFieldForError(
     }
 
     case "email": {
-      if (value.length === 0) return "Email is mandatory";
+      const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const isEmailValid = emailRegex.test(value);
 
+      if (!isEmailValid) return "Email is invalid";
       return "";
     }
 
@@ -66,4 +69,13 @@ export function getUserData(): UserData | null {
 
 export function deleteUserData() {
   localStorage.removeItem(USER_DATA_KEY);
+}
+
+export const authLoader: LoaderFunction<UserData> = () => {
+  return getUserData();
+};
+
+export function logoutAction() {
+  deleteUserData();
+  return redirect("/");
 }
