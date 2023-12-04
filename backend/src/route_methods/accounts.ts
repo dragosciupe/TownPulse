@@ -4,6 +4,8 @@ import {
   type LoginAccountRequest,
 } from "./request-types";
 
+import { type UserData } from "./response-types";
+
 import {
   UserModel,
   addNewUser,
@@ -67,14 +69,21 @@ export const loginUser = async (req: Request, res: Response) => {
 
   const currentUser = await findUserByUsername(loginRequest.username);
   if (!currentUser) {
-    res.status(400).send("No account with this username exists");
+    res.status(400).json("No account with this username exists");
     return;
   }
 
   if (currentUser.password !== loginRequest.password) {
-    res.status(400).send("Password is not correct");
+    res.status(400).json("Password is not correct");
     return;
   }
 
-  res.send("Account logged in succesfully");
+  const userDataResponse: UserData = {
+    id: currentUser._id.toString(),
+    username: currentUser.username,
+    city: currentUser.city,
+    email: currentUser.email,
+    accountType: currentUser.accountType,
+  };
+  res.json(userDataResponse);
 };
