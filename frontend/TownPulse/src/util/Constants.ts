@@ -112,7 +112,7 @@ export const EVENTS = [
       img: petrecere,
       desc: 'scurta descriere',
       date: new Date(2026, 9, 20),
-      city: 'Deve',
+      city: 'Deva',
     },
     {
       id: 'ev-15',
