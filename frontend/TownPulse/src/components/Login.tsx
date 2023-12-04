@@ -8,7 +8,7 @@ function Login() {
   const loginResponse = useActionData() as string;
 
   return (
-    <>
+    <div className={classes.container}>
       <Form method="post">
         <div className={classes.input_block}>
           <div>
@@ -31,8 +31,8 @@ function Login() {
           </button>
         </div>
       </Form>
-      <p className={classes.request_result}>{loginResponse}</p>
-    </>
+      <p className={classes.register_error}>{loginResponse}</p>
+    </div>
   );
 }
 

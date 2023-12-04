@@ -2,16 +2,17 @@ import { type ReactNode } from "react";
 import Register from "../components/Register.tsx";
 import Login from "../components/Login.tsx";
 import { checkFieldForError } from "../util/Methods.ts";
-import { useSearchParams, json } from "react-router-dom";
+import { useSearchParams, json, redirect } from "react-router-dom";
 import {
   type LoginAccountRequest,
   type RegisterAccountRequest,
 } from "../remote/request-types.ts";
+import { saveUserData } from "../util/Methods.ts";
+import { UserData } from "../util/Types.ts";
 
 function AuthenticationPage() {
   const [searchParams] = useSearchParams();
   const mode = searchParams.get("mode") || "login";
-  console.log("rerendered page");
 
   let content: ReactNode;
 
@@ -51,6 +52,14 @@ export async function action({ request }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(loginRequest),
     });
+
+    const parsedResponse = await response.json();
+    if (typeof parsedResponse === "object") {
+      saveUserData(parsedResponse as UserData);
+      return redirect("/");
+    }
+
+    return json(parsedResponse);
   } else {
     const registerRequest: RegisterAccountRequest = {
       username: authData.username,
@@ -60,6 +69,7 @@ export async function action({ request }) {
     };
 
     const validationErrors = {
+      status: "form-errors",
       username:
         checkFieldForError("username", authData.username) !== "" ? true : false,
       password:
@@ -85,7 +95,9 @@ export async function action({ request }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(registerRequest),
     });
-  }
 
-  return response;
+    const parsedResponse = await response.text();
+    if (response.ok) return json({ success: true, message: parsedResponse });
+    if (!response.ok) return json({ success: false, message: parsedResponse });
+  }
 }

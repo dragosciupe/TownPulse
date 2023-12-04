@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Form, Link, useActionData, useNavigation } from "react-router-dom";
 import { checkFieldForError } from "../util/Methods.ts";
 
@@ -27,12 +27,28 @@ function Register() {
   const confirmPassword = useRef<HTMLInputElement>(null);
   const city = useRef<HTMLInputElement>(null);
   const email = useRef<HTMLInputElement>(null);
+  const form = useRef<HTMLFormElement>(null);
   const navigation = useNavigation();
-  const actionData = useActionData();
+  const actionData: any = useActionData();
 
   const isSubmitting = navigation.state === "submitting";
-  const formErrors = typeof actionData === "object";
-  const registerResponse = formErrors ? undefined : (actionData as string);
+  const formErrors = actionData && actionData.status;
+  const registerResponse = formErrors
+    ? undefined
+    : (actionData as { success: boolean; message: string });
+
+  useEffect(() => {
+    if (registerResponse && registerResponse.success) {
+      form.current?.reset();
+      setFieldEdits({
+        username: false,
+        password: false,
+        confirmPassword: false,
+        city: false,
+        email: false,
+      });
+    }
+  }, [registerResponse]);
 
   if (formErrors && !Object.values(fieldEdits).find((v) => v === true)) {
     setFieldEdits({
@@ -50,8 +66,8 @@ function Register() {
   }
 
   return (
-    <>
-      <Form method="post">
+    <div className={classes.container}>
+      <Form ref={form} method="post">
         <div className={classes.input_block}>
           <div>
             <label htmlFor="username">Enter a username</label>
@@ -159,9 +175,17 @@ function Register() {
         </div>
       </Form>
       {registerResponse && (
-        <p className={classes.request_result}>{registerResponse}</p>
+        <p
+          className={
+            registerResponse.success
+              ? classes.register_success
+              : classes.register_error
+          }
+        >
+          {registerResponse.message}
+        </p>
       )}
-    </>
+    </div>
   );
 }
 

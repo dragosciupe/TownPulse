@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { getUserData } from "../util/Methods";
 
 import classes from "./MainNavigation.module.css";
 
@@ -7,6 +8,8 @@ function isPageActive(isActive: boolean): string | undefined {
 }
 
 function MainNavigation() {
+  const userData = getUserData();
+
   return (
     <header className={classes.header}>
       <nav>
@@ -48,12 +51,16 @@ function MainNavigation() {
           </li>
 
           <li>
-            <NavLink
-              to="/authentication"
-              className={({ isActive }) => isPageActive(isActive)}
-            >
-              Log in
-            </NavLink>
+            {userData === null ? (
+              <NavLink
+                to="/authentication"
+                className={({ isActive }) => isPageActive(isActive)}
+              >
+                Log in
+              </NavLink>
+            ) : (
+              <button>Logout</button>
+            )}
           </li>
         </ul>
       </nav>

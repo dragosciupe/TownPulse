@@ -2,7 +2,10 @@ import {
   MIN_USERNAME_LENGTH,
   MAX_USERNAME_LENGTH,
   MIN_PASSWORD_LENGTH,
+  USER_DATA_KEY,
 } from "../util/Constants";
+
+import { type UserData } from "./Types";
 
 export function checkFieldForError(
   field: string,
@@ -49,4 +52,18 @@ export function checkFieldForError(
       return "";
     }
   }
+}
+
+export function saveUserData(userData: UserData) {
+  localStorage.setItem(USER_DATA_KEY, JSON.stringify(userData));
+}
+
+export function getUserData(): UserData | null {
+  const userData = localStorage.getItem(USER_DATA_KEY);
+  if (!userData) return null;
+  return JSON.parse(userData);
+}
+
+export function deleteUserData() {
+  localStorage.removeItem(USER_DATA_KEY);
 }
