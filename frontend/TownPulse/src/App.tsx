@@ -8,11 +8,14 @@ import ProfilePage from "./pages/ProfilePage.tsx";
 import AuthenticationPage, {
   action as authAction,
 } from "./pages/AuthenticationPage.tsx";
+import { authLoader, logoutAction } from "./util/Methods.ts";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    id: "root",
     element: <RootLayout />,
+    loader: authLoader,
     children: [
       { index: true, element: <HomePage /> },
       { path: "/eventsCalendar", element: <EventsCalendarPage /> },
@@ -23,6 +26,7 @@ const router = createBrowserRouter([
         element: <AuthenticationPage />,
         action: authAction,
       },
+      { path: "logout", action: logoutAction },
     ],
   },
 ]);
