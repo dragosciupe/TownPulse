@@ -11,6 +11,8 @@
   }
   
   .list a {
+    font-size: larger;
+    font-weight: 500;
     padding: 0.5rem;
     text-decoration: none;
     color: darkgreen;

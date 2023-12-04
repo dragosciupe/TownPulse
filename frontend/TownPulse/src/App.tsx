@@ -5,7 +5,9 @@ import HomePage from "./pages/HomePage.tsx";
 import EventsCalendarPage from "./pages/EventsCalendarPage.tsx";
 import AddEventPage from "./pages/AddEventPage.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
-import AuthenticationPage from "./pages/AuthenticationPage.tsx";
+import AuthenticationPage, {
+  action as authAction,
+} from "./pages/AuthenticationPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -16,7 +18,11 @@ const router = createBrowserRouter([
       { path: "/eventsCalendar", element: <EventsCalendarPage /> },
       { path: "/addEvent", element: <AddEventPage /> },
       { path: "/profile", element: <ProfilePage /> },
-      { path: "/authentication", element: <AuthenticationPage /> },
+      {
+        path: "/authentication",
+        element: <AuthenticationPage />,
+        action: authAction,
+      },
     ],
   },
 ]);

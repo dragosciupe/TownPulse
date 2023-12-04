@@ -1,0 +1,29 @@
+.input_block {
+    margin-top: 25px;
+}
+
+form {
+    text-align: center;
+}
+
+input, input:focus {
+    border: 2px solid darkgreen;
+    border-radius: 5px;
+}
+
+p {
+    margin: 0;
+}
+
+.error {
+    color: red;
+}
+
+.actions {
+    margin-top: 15px;
+}
+
+.request_result {
+    margin-top: 30px;
+    text-align: center;
+}
