@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 
@@ -12,6 +13,7 @@ import { PORT, MONGO_URL } from "./src/util";
 
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
 
 app.post("/registerAccount", registerUser);
