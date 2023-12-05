@@ -1,0 +1,30 @@
+  
+  .profile_navigation {
+    padding: 1rem;
+    margin: 0;
+    display: flex;
+    margin-top: 30px;
+    justify-content: space-around;
+  }
+  
+  .profile_navigation ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .profile_navigation ul a {
+    font-size: larger;
+    font-weight: 500;
+    padding: 0.5rem;
+    text-decoration: none;
+    color: black;
+    border: 0.5px solid transparent;
+  }
+  
+  .profile_navigation ul a:hover,
+  .profile_navigation ul a.active {
+    background-color: lightgreen;
+    border: 0.5px solid lightgreen;
+    border-radius: 1rem;
+  }

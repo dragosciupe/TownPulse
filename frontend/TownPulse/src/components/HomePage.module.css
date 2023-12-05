@@ -8,7 +8,7 @@
   
   .event {
     width: 60%;
-    margin: 0 auto 7rem; /* Increase the margin to add more space between items */
+    margin: 0 auto 7rem; 
     background-color: #456e39;
     border-radius: 1rem;
     border: 40px;
@@ -42,9 +42,4 @@
     margin: 1rem;
     font-size: 1rem;
     font-weight: bold;
-  }
-  h1{
-    color: white;
-    text-align: center;
-    
   }

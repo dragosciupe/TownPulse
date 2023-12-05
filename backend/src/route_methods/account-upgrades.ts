@@ -24,7 +24,7 @@ export const upgradeAccountRequest = async (req: Request, res: Response) => {
 
   const doesUserAlreadyRequested = await findAccountUpgradeRequest(accountId);
   if (doesUserAlreadyRequested) {
-    res.status(400).send("You already sent an upgrade request");
+    res.status(400).send("You already sent an account upgrade request");
     return;
   }
 

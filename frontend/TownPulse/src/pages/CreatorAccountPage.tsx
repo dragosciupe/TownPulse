@@ -1,6 +1,7 @@
 import { useRouteLoaderData, Form, useActionData } from "react-router-dom";
 import { AccountType, UserData } from "../util/Types";
 import { getUserData } from "../util/Methods";
+import classes from "../components/Auth.module.css";
 
 function CreatorAccountPage() {
   const userData = useRouteLoaderData("root") as UserData;
@@ -9,11 +10,28 @@ function CreatorAccountPage() {
   return (
     <>
       {userData.accountType === AccountType.NORMAL ? (
-        <Form method="POST">
-          <button>Request a creator account</button>
-        </Form>
+        <>
+          <h3 style={{ textAlign: "center" }}>
+            You can apply to become a creator on TownPulse.
+            <br />
+            As a creator you can post events for the people of your city to see
+            <br /> <br /> <br />
+            Note: Your city's town hall can approve or reject your request
+            however they see fit.
+          </h3>
+
+          <Form method="POST" className={classes.actions}>
+            <button>Request a creator account</button>
+          </Form>
+        </>
       ) : undefined}
-      {creatorRequestResponse && <p>{creatorRequestResponse}</p>}
+      {creatorRequestResponse && (
+        <p
+          style={{ textAlign: "center", marginTop: "30px", fontSize: "larger" }}
+        >
+          {creatorRequestResponse}
+        </p>
+      )}
     </>
   );
 }

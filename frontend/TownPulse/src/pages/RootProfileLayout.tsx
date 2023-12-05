@@ -1,5 +1,5 @@
 import ProfileNavigation from "../components/ProfileNavigation";
-import { Outlet, useRouteLoaderData, Link } from "react-router-dom";
+import { Outlet, useRouteLoaderData } from "react-router-dom";
 import { UserData } from "../util/Types";
 
 function RootProfileLayout() {
@@ -8,8 +8,7 @@ function RootProfileLayout() {
   if (!userData) {
     return (
       <>
-        <h1>You need to be logged in</h1>
-        <Link to="/authentication?mode=login" />
+        <h1 style={{ textAlign: "center" }}>You need to be logged in</h1>
       </>
     );
   }

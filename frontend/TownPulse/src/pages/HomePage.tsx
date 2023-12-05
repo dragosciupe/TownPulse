@@ -1,12 +1,9 @@
 import Event from "../components/Event";
 import { EVENTS } from "../util/Constants";
-import classes from "../components/HomePage.module.css"
-import imd from "../util/images/collage-party.jpg"
+import classes from "../components/HomePage.module.css";
 function HomePage() {
-  
   return (
     <>
-      <h1>Welcome to the home page</h1>
       <ul id={classes.events}>
         {EVENTS.map((ev) => (
           <Event

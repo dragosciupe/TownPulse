@@ -60,7 +60,7 @@ function MainNavigation() {
               </NavLink>
             ) : (
               <Form action="/logout" method="post">
-                <button>Logout</button>
+                <button id={classes.logout_button}>Logout</button>
               </Form>
             )}
           </li>

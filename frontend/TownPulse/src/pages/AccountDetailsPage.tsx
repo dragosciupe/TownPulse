@@ -1,7 +1,7 @@
 function AccountDetailsPage() {
   return (
     <>
-      <h1>Welcome to your account details</h1>
+      <h1 style={{ textAlign: "center" }}>Welcome to your account details</h1>
     </>
   );
 }

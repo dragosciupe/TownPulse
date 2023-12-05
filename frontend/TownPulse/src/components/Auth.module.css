@@ -1,7 +1,7 @@
 .container {
     width: 500px;
-    background-color: transparent; /* Set your desired background color */
-    padding: 20px; /* Add padding for spacing around the content */
+    background-color: transparent; 
+    padding: 20px; 
     margin: auto;
     border: 2px solid rgba(255, 255, 255, .2)
 }
@@ -33,24 +33,24 @@ p {
   
 .actions {
     margin-top: 15px;
-    text-align: center; /* Center the buttons */
+    text-align: center; 
 }
   
 .actions a {
     text-decoration: none;
     color: #007bff;
-    margin-right: 10px; /* Add some space between buttons */
+    margin-right: 10px; 
 }
   
 .actions button {
-    padding: 0.5rem 0.75rem; /* Adjust padding to make the button smaller */
+    padding: 0.5rem 0.75rem; 
     font-size: 1rem;
     background-color: #28a745;
     color: #fff;
     border: none;
     border-radius: 0.25rem;
     cursor: pointer;
-    width: 45%; /* Adjust width of the buttons */
+    width: 45%; 
 }
   
 .actions button:disabled {
