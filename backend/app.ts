@@ -6,7 +6,7 @@ import bodyParser from "body-parser";
 import { registerUser, loginUser } from "./src/route_methods/accounts";
 import {
   upgradeAccountRequest,
-  acceptAccountUpgradeRequest,
+  accountUpgradeRequestAction,
 } from "./src/route_methods/account-upgrades";
 
 import { PORT, MONGO_URL } from "./src/util";
@@ -19,7 +19,12 @@ app.use(bodyParser.json());
 app.post("/registerAccount", registerUser);
 app.post("/loginAccount", loginUser);
 app.post("/upgradeAccount", upgradeAccountRequest);
-app.post("/acceptAccountUpgrade", acceptAccountUpgradeRequest);
+app.post("/acceptAccountUpgrade", (req, res) =>
+  accountUpgradeRequestAction(req, res, "accept")
+);
+app.post("/rejectAccountUpgrade", (req, res) =>
+  accountUpgradeRequestAction(req, res, "reject")
+);
 
 app.listen(PORT, () => {
   console.log("Server started");

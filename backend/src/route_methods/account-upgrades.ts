@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
-import { type AcceptAccountUpgradeRequest } from "./request-types";
+import { type AccountUpgradeRequest } from "./request-types";
 
 import {
   AccountUpgradeRequestModel,
-  findAccountUpgradeRequest,
-  findAccountUpgradeRequestById,
-  addAccountRequest,
-  deleteAccountUpgradeRequestById,
+  findRequestByAccountId,
+  findRequestById,
+  addRequest,
+  updateRequestStatus,
 } from "../db/models/account-upgrade-requests";
 
 import { findUserById, upgradeUserToCreator } from "../db/models/user";
-import { isRequestValid, AccountType } from "../util";
+import { isRequestValid, AccountType, UpgradeRequestStatus } from "../util";
 
 export const upgradeAccountRequest = async (req: Request, res: Response) => {
   const accountId = req.body.accountId;
@@ -22,7 +22,7 @@ export const upgradeAccountRequest = async (req: Request, res: Response) => {
     return;
   }
 
-  const doesUserAlreadyRequested = await findAccountUpgradeRequest(accountId);
+  const doesUserAlreadyRequested = await findRequestByAccountId(accountId);
   if (doesUserAlreadyRequested) {
     res.status(400).send("You already sent an account upgrade request");
     return;
@@ -33,20 +33,19 @@ export const upgradeAccountRequest = async (req: Request, res: Response) => {
   const upgradeRequestModel: AccountUpgradeRequestModel = {
     accountId: accountId,
     city: curUser.city,
+    status: UpgradeRequestStatus.PENDING,
   };
 
-  await addAccountRequest(upgradeRequestModel);
+  await addRequest(upgradeRequestModel);
   res.send("Account upgrade request sent succesfully");
 };
 
-export const acceptAccountUpgradeRequest = async (
+export const accountUpgradeRequestAction = async (
   req: Request,
-  res: Response
+  res: Response,
+  mode: "accept" | "reject"
 ) => {
-  const acceptUpgradeRequest: AcceptAccountUpgradeRequest = {
-    townHallAccountId: req.body.townHallAccountId,
-    requestId: req.body.requestId,
-  };
+  const acceptUpgradeRequest: AccountUpgradeRequest = req.body;
 
   if (!isRequestValid(acceptUpgradeRequest)) {
     res
@@ -55,11 +54,17 @@ export const acceptAccountUpgradeRequest = async (
     return;
   }
 
-  const curUpgradeRequest = await findAccountUpgradeRequestById(
+  const curUpgradeRequest = await findRequestById(
     acceptUpgradeRequest.requestId
   );
   if (!curUpgradeRequest) {
     res.status(400).send("Upgrade request does not exist");
+    return;
+  }
+
+  const accountToUpgrade = await findUserById(curUpgradeRequest.accountId);
+  if (!accountToUpgrade) {
+    res.status(400).send("Account to upgrade does not exist");
     return;
   }
 
@@ -77,14 +82,18 @@ export const acceptAccountUpgradeRequest = async (
     return;
   }
 
-  const accountToUpgrade = await findUserById(curUpgradeRequest.accountId);
-  if (!accountToUpgrade) {
-    res.status(400).send("Account to upgrade does not exist");
-    return;
+  if (mode === "accept") {
+    await upgradeUserToCreator(curUpgradeRequest.accountId);
+    await updateRequestStatus(
+      curUpgradeRequest._id.toString(),
+      UpgradeRequestStatus.ACCEPTED
+    );
+    res.send("Account upgraded succesfully");
+  } else {
+    await updateRequestStatus(
+      curUpgradeRequest._id.toString(),
+      UpgradeRequestStatus.REJECTED
+    );
+    res.send("Request rejected succesfully");
   }
-
-  await upgradeUserToCreator(curUpgradeRequest.accountId);
-  await deleteAccountUpgradeRequestById(acceptUpgradeRequest.requestId);
-
-  res.send("Account upgraded succesfully");
 };

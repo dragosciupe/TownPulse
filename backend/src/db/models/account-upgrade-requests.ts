@@ -1,13 +1,16 @@
 import mongoose, { ObjectId } from "mongoose";
+import { UpgradeRequestStatus } from "../../util";
 
 export interface AccountUpgradeRequestModel {
   accountId: string;
   city: string;
+  status: UpgradeRequestStatus;
 }
 
 const accountUpgradeRequestSchema = new mongoose.Schema({
   accountId: { type: String, required: true },
   city: { type: String, required: true },
+  status: { type: Number, required: true },
 });
 
 export const AccountUpgradeRequest = mongoose.model(
@@ -15,18 +18,21 @@ export const AccountUpgradeRequest = mongoose.model(
   accountUpgradeRequestSchema
 );
 
-export async function addAccountRequest(
-  accountRequest: AccountUpgradeRequestModel
-) {
+export async function addRequest(accountRequest: AccountUpgradeRequestModel) {
   const requestToAdd = new AccountUpgradeRequest(accountRequest);
   await requestToAdd.save();
 }
 
-export const findAccountUpgradeRequest = (accountId: string) =>
+export const findRequestByAccountId = (accountId: string) =>
   AccountUpgradeRequest.findOne({ accountId: accountId });
 
-export const findAccountUpgradeRequestById = (requestId: string) =>
+export const findRequestById = (requestId: string) =>
   AccountUpgradeRequest.findById(requestId);
 
-export const deleteAccountUpgradeRequestById = (requestId: string) =>
+export const updateRequestStatus = (
+  requestId: string,
+  newStatus: UpgradeRequestStatus
+) => AccountUpgradeRequest.findByIdAndUpdate(requestId, { status: newStatus });
+
+export const deleteRequestById = (requestId: string) =>
   AccountUpgradeRequest.findByIdAndDelete(requestId);

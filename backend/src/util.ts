@@ -4,6 +4,12 @@ export const enum AccountType {
   TOWN_HALL,
 }
 
+export const enum UpgradeRequestStatus {
+  PENDING,
+  ACCEPTED,
+  REJECTED,
+}
+
 //Methods
 export function isRequestValid(requestObject: Object): boolean {
   const requestPropertiesTypes = Object.values(requestObject).map(

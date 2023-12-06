@@ -10,7 +10,7 @@ export type LoginAccountRequest = {
   password: string;
 };
 
-export type AcceptAccountUpgradeRequest = {
+export type AccountUpgradeRequest = {
   townHallAccountId: string;
   requestId: string;
 };
