@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
-import { type AccountUpgradeRequest } from "./request-types";
+import {
+  type AccountUpgradeRequest,
+  type RequestWithAccountId,
+} from "./request-types";
 
 import {
   AccountUpgradeRequestModel,
@@ -7,32 +10,39 @@ import {
   findRequestById,
   addRequest,
   updateRequestStatus,
+  getRequestsForAccount,
+  getRequestsForTownHall,
 } from "../db/models/account-upgrade-requests";
 
 import { findUserById, upgradeUserToCreator } from "../db/models/user";
 import { isRequestValid, AccountType, UpgradeRequestStatus } from "../util";
 
 export const upgradeAccountRequest = async (req: Request, res: Response) => {
-  const accountId = req.body.accountId;
+  const upgradeRequest: RequestWithAccountId = {
+    accountId: req.body.accountId,
+  };
 
-  if (!accountId) {
+  if (!upgradeRequest) {
     res
       .status(400)
       .send("Request object does not have all the correct properties");
     return;
   }
 
-  const doesUserAlreadyRequested = await findRequestByAccountId(accountId);
+  const doesUserAlreadyRequested = await findRequestByAccountId(
+    upgradeRequest.accountId
+  );
   if (doesUserAlreadyRequested) {
     res.status(400).send("You already sent an account upgrade request");
     return;
   }
 
-  const curUser = (await findUserById(accountId))!;
+  const curUser = (await findUserById(upgradeRequest.accountId))!;
 
   const upgradeRequestModel: AccountUpgradeRequestModel = {
-    accountId: accountId,
+    accountId: upgradeRequest.accountId,
     city: curUser.city,
+    date: new Date().getTime(),
     status: UpgradeRequestStatus.PENDING,
   };
 
@@ -45,7 +55,10 @@ export const accountUpgradeRequestAction = async (
   res: Response,
   mode: "accept" | "reject"
 ) => {
-  const acceptUpgradeRequest: AccountUpgradeRequest = req.body;
+  const acceptUpgradeRequest: AccountUpgradeRequest = {
+    townHallAccountId: req.body.townHallAccountId,
+    requestId: req.body.requestId,
+  };
 
   if (!isRequestValid(acceptUpgradeRequest)) {
     res
@@ -96,4 +109,35 @@ export const accountUpgradeRequestAction = async (
     );
     res.send("Request rejected succesfully");
   }
+};
+
+export const getAccountUpgradeRequests = async (
+  req: Request,
+  res: Response
+) => {
+  const requestsListRequest: RequestWithAccountId = {
+    accountId: req.body.accountId,
+  };
+
+  if (!isRequestValid(requestsListRequest)) {
+    res
+      .status(400)
+      .send("Request object does not have all the correct properties");
+    return;
+  }
+
+  const user = await findUserById(requestsListRequest.accountId);
+  if (!user) {
+    res.status(400).send("This user does not exist");
+    return;
+  }
+
+  let requests: Array<AccountUpgradeRequestModel>;
+  if (user.accountType === AccountType.TOWN_HALL) {
+    requests = await getRequestsForTownHall(user.city);
+  } else {
+    requests = await getRequestsForAccount(user._id.toString());
+  }
+
+  res.json(requests);
 };

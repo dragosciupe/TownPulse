@@ -4,12 +4,14 @@ import { UpgradeRequestStatus } from "../../util";
 export interface AccountUpgradeRequestModel {
   accountId: string;
   city: string;
+  date: number;
   status: UpgradeRequestStatus;
 }
 
 const accountUpgradeRequestSchema = new mongoose.Schema({
   accountId: { type: String, required: true },
   city: { type: String, required: true },
+  date: { type: Number, required: true },
   status: { type: Number, required: true },
 });
 
@@ -36,3 +38,9 @@ export const updateRequestStatus = (
 
 export const deleteRequestById = (requestId: string) =>
   AccountUpgradeRequest.findByIdAndDelete(requestId);
+
+export const getRequestsForAccount = (accountId: string) =>
+  AccountUpgradeRequest.find({ accountId: accountId });
+
+export const getRequestsForTownHall = (city: string) =>
+  AccountUpgradeRequest.find({ city: city });

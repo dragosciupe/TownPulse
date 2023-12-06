@@ -7,6 +7,7 @@ import { registerUser, loginUser } from "./src/route_methods/accounts";
 import {
   upgradeAccountRequest,
   accountUpgradeRequestAction,
+  getAccountUpgradeRequests,
 } from "./src/route_methods/account-upgrades";
 
 import { PORT, MONGO_URL } from "./src/util";
@@ -25,6 +26,7 @@ app.post("/acceptAccountUpgrade", (req, res) =>
 app.post("/rejectAccountUpgrade", (req, res) =>
   accountUpgradeRequestAction(req, res, "reject")
 );
+app.get("/accountUpgradeRequests", getAccountUpgradeRequests);
 
 app.listen(PORT, () => {
   console.log("Server started");

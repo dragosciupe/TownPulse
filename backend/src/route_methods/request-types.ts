@@ -14,3 +14,7 @@ export type AccountUpgradeRequest = {
   townHallAccountId: string;
   requestId: string;
 };
+
+export type RequestWithAccountId = {
+  accountId: string;
+};
