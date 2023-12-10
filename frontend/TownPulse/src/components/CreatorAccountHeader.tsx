@@ -1,7 +1,8 @@
 import { Form, useActionData } from "react-router-dom";
 import { AccountType } from "../util/Types";
-import classes from "./CreatorAccountHeader.module.css";
+import classes from "./CreatorAccount.module.css";
 import { BasicResponse } from "../remote/response-types";
+import { ReactNode } from "react";
 
 type CreatorAccountHeaderProps = {
   accountType: AccountType;
@@ -12,22 +13,22 @@ function CreatorAccountHeader({
   accountType,
   city,
 }: CreatorAccountHeaderProps) {
-  const creatorAccountResponse = useActionData() as BasicResponse<string>;
+  const actionResponse = useActionData() as BasicResponse<string>;
+
+  let mainContent: ReactNode;
 
   if (accountType === AccountType.TOWN_HALL) {
-    return (
+    mainContent = (
       <div className={classes.container}>
         <h3>
           In calitate de reprezentat al primariei orasului {city},puteti accepta
           cererile institutiilor si companiilor care doresc sa obtina cont de
           creator pentru orasul dumnevoastra
         </h3>
-
-        <hr className={classes.divider} />
       </div>
     );
   } else {
-    return (
+    mainContent = (
       <div className={classes.container}>
         <h3>
           Puteti aplica pentru un cont de creator pentru orasul {city}
@@ -46,20 +47,25 @@ function CreatorAccountHeader({
         ) : (
           <button disabled>Esti deja creator</button>
         )}
-
-        {creatorAccountResponse && (
-          <div
-            className={`${classes.result} ${
-              creatorAccountResponse.status ? classes.success : classes.error
-            }`}
-          >
-            <p>{creatorAccountResponse.data}</p>
-          </div>
-        )}
-        <hr className={classes.divider} />
       </div>
     );
   }
+
+  return (
+    <>
+      {mainContent}
+      {actionResponse && (
+        <div
+          className={`${classes.result} ${
+            actionResponse.status ? classes.success : classes.error
+          }`}
+        >
+          <p>{actionResponse.data}</p>
+        </div>
+      )}
+      <hr className={classes.divider} />
+    </>
+  );
 }
 
 export default CreatorAccountHeader;

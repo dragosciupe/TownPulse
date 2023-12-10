@@ -106,7 +106,7 @@ export const accountUpgradeRequestAction = async (
       curUpgradeRequest._id.toString(),
       UpgradeRequestStatus.ACCEPTED
     );
-    res.send("Account upgraded succesfully");
+    res.send("Request accepted succesfully");
   } else {
     await updateRequestStatus(
       curUpgradeRequest._id.toString(),

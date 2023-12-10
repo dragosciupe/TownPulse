@@ -13,3 +13,8 @@ export type RegisterAccountRequest = {
 export type RequestWithAccountId = {
   accountId: string;
 };
+
+export type AccountUpgradeRequest = {
+  townHallAccountId: string;
+  requestId: string;
+};
