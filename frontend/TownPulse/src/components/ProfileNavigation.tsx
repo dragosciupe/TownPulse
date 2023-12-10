@@ -29,19 +29,15 @@ function ProfileNavigation() {
             Saved events
           </NavLink>
         </li>
-        {userData.accountType === AccountType.NORMAL && (
-          <li>
-            <NavLink
-              to="/profile/creatorAccountPage"
-              className={({ isActive }) => isPageActive(isActive)}
-            >
-              Request a creator's account
-            </NavLink>
-          </li>
-        )}
-        {userData.accountType === AccountType.TOWN_HALL && (
-          <li>Creator requests</li>
-        )}
+
+        <li>
+          <NavLink
+            to="/profile/creatorAccountPage"
+            className={({ isActive }) => isPageActive(isActive)}
+          >
+            Request a creator's account
+          </NavLink>
+        </li>
       </ul>
     </nav>
   );

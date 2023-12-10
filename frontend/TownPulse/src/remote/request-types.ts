@@ -9,3 +9,7 @@ export type RegisterAccountRequest = {
   city: string;
   email: string;
 };
+
+export type RequestWithAccountId = {
+  accountId: string;
+};
