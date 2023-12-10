@@ -42,4 +42,7 @@ export const getRequestsForAccount = (accountId: string) =>
   AccountUpgradeRequest.find({ accountId: accountId });
 
 export const getRequestsForTownHall = (city: string) =>
-  AccountUpgradeRequest.find({ city: city });
+  AccountUpgradeRequest.find(
+    { city: city },
+    { status: UpgradeRequestStatus.PENDING }
+  );
