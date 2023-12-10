@@ -3,6 +3,7 @@ import { UpgradeRequestStatus } from "../../util";
 
 export interface AccountUpgradeRequestModel {
   accountId: string;
+  accountUsername: string;
   city: string;
   date: number;
   status: UpgradeRequestStatus;
@@ -10,6 +11,7 @@ export interface AccountUpgradeRequestModel {
 
 const accountUpgradeRequestSchema = new mongoose.Schema({
   accountId: { type: String, required: true },
+  accountUsername: { type: String, required: true },
   city: { type: String, required: true },
   date: { type: Number, required: true },
   status: { type: Number, required: true },

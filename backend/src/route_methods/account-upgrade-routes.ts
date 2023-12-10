@@ -45,6 +45,7 @@ export const upgradeAccountRequest = async (req: Request, res: Response) => {
 
   const upgradeRequestModel: AccountUpgradeRequestModel = {
     accountId: upgradeRequest.accountId,
+    accountUsername: curUser.username,
     city: curUser.city,
     date: new Date().getTime(),
     status: UpgradeRequestStatus.PENDING,
@@ -148,6 +149,7 @@ export const getAccountUpgradeRequests = async (
     return {
       requestId: request._id.toString(),
       accountId: request.accountId,
+      accountUsername: request.accountUsername,
       city: request.city,
       date: request.date,
       status: request.status,
