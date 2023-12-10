@@ -6,7 +6,6 @@ import {
 
 import {
   AccountUpgradeRequestModel,
-  findRequestByAccountId,
   findRequestById,
   addRequest,
   updateRequestStatus,
@@ -30,11 +29,15 @@ export const upgradeAccountRequest = async (req: Request, res: Response) => {
     return;
   }
 
-  const doesUserAlreadyRequested = await findRequestByAccountId(
-    upgradeRequest.accountId
-  );
-  if (doesUserAlreadyRequested) {
-    res.status(400).send("You already sent an account upgrade request");
+  const userRequests: Array<AccountUpgradeRequestModel> =
+    await getRequestsForAccount(upgradeRequest.accountId);
+
+  if (
+    userRequests.find(
+      (request) => request.status === UpgradeRequestStatus.PENDING
+    )
+  ) {
+    res.status(400).send("You already have a pending request");
     return;
   }
 

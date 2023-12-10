@@ -25,9 +25,6 @@ export async function addRequest(accountRequest: AccountUpgradeRequestModel) {
   await requestToAdd.save();
 }
 
-export const findRequestByAccountId = (accountId: string) =>
-  AccountUpgradeRequest.findOne({ accountId: accountId });
-
 export const findRequestById = (requestId: string) =>
   AccountUpgradeRequest.findById(requestId);
 
