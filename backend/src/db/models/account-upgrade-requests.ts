@@ -39,7 +39,9 @@ export const deleteRequestById = (requestId: string) =>
   AccountUpgradeRequest.findByIdAndDelete(requestId);
 
 export const getRequestsForAccount = (accountId: string) =>
-  AccountUpgradeRequest.find({ accountId: accountId });
+  AccountUpgradeRequest.find({ accountId: accountId }).sort({
+    date: "descending",
+  });
 
 export const getRequestsForTownHall = (city: string) =>
   AccountUpgradeRequest.find({

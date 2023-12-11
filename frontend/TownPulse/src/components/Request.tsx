@@ -18,6 +18,12 @@ function Request({ requestItem }: RequestProps) {
     );
   }
 
+  const dateConstructor = new Date(requestItem.date);
+  const day = dateConstructor.getDate();
+  const month = dateConstructor.getMonth();
+  const year = dateConstructor.getFullYear();
+  const formattedDate = `${day}/${month}/${year}`;
+
   if (userData.accountType === AccountType.TOWN_HALL) {
     return (
       <div>
@@ -28,7 +34,7 @@ function Request({ requestItem }: RequestProps) {
 
         <div>
           <label>Date:</label>
-          <label>{requestItem.date}</label>
+          <label>{formattedDate}</label>
         </div>
 
         <div>
@@ -42,7 +48,7 @@ function Request({ requestItem }: RequestProps) {
       <div>
         <div>
           <label>Date:</label>
-          <label>{requestItem.date}</label>
+          <label>{formattedDate}</label>
         </div>
 
         <div>
