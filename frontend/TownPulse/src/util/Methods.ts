@@ -6,7 +6,7 @@ import {
   USER_DATA_KEY,
 } from "../util/Constants";
 
-import { type UserData } from "./Types";
+import { UpgradeRequestStatus, type UserData } from "./Types";
 
 export function checkFieldForError(
   field: string,
@@ -78,4 +78,22 @@ export const authLoader: LoaderFunction<UserData> = () => {
 export function logoutAction() {
   deleteUserData();
   return redirect("/");
+}
+
+export function upgradeRequestStatusToString(
+  status: UpgradeRequestStatus
+): string {
+  switch (status) {
+    case UpgradeRequestStatus.PENDING: {
+      return "PENDING";
+    }
+
+    case UpgradeRequestStatus.ACCEPTED: {
+      return "ACCEPTED";
+    }
+
+    case UpgradeRequestStatus.REJECTED: {
+      return "REJECTED";
+    }
+  }
 }

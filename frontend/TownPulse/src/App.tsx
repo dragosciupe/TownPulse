@@ -9,8 +9,10 @@ import AuthenticationPage, {
   action as authAction,
 } from "./pages/AuthenticationPage.tsx";
 import { authLoader, logoutAction } from "./util/Methods.ts";
-import { creatorRequestAction } from "./pages/CreatorAccountPage.tsx";
-import CreatorAccountPage from "./pages/CreatorAccountPage.tsx";
+import CreatorAccountPage, {
+  creatorRequestAction,
+  creatorRequestsLoader,
+} from "./pages/CreatorAccountPage.tsx";
 import AccountDetailsPage from "./pages/AccountDetailsPage.tsx";
 import SavedEventsPage from "./pages/SavedEventsPage.tsx";
 
@@ -33,6 +35,7 @@ const router = createBrowserRouter([
           {
             path: "creatorAccountPage",
             element: <CreatorAccountPage />,
+            loader: creatorRequestsLoader,
             action: creatorRequestAction,
           },
         ],

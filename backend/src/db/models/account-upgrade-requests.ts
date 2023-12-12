@@ -3,6 +3,7 @@ import { UpgradeRequestStatus } from "../../util";
 
 export interface AccountUpgradeRequestModel {
   accountId: string;
+  accountUsername: string;
   city: string;
   date: number;
   status: UpgradeRequestStatus;
@@ -10,6 +11,7 @@ export interface AccountUpgradeRequestModel {
 
 const accountUpgradeRequestSchema = new mongoose.Schema({
   accountId: { type: String, required: true },
+  accountUsername: { type: String, required: true },
   city: { type: String, required: true },
   date: { type: Number, required: true },
   status: { type: Number, required: true },
@@ -25,9 +27,6 @@ export async function addRequest(accountRequest: AccountUpgradeRequestModel) {
   await requestToAdd.save();
 }
 
-export const findRequestByAccountId = (accountId: string) =>
-  AccountUpgradeRequest.findOne({ accountId: accountId });
-
 export const findRequestById = (requestId: string) =>
   AccountUpgradeRequest.findById(requestId);
 
@@ -40,7 +39,12 @@ export const deleteRequestById = (requestId: string) =>
   AccountUpgradeRequest.findByIdAndDelete(requestId);
 
 export const getRequestsForAccount = (accountId: string) =>
-  AccountUpgradeRequest.find({ accountId: accountId });
+  AccountUpgradeRequest.find({ accountId: accountId }).sort({
+    date: "descending",
+  });
 
 export const getRequestsForTownHall = (city: string) =>
-  AccountUpgradeRequest.find({ city: city });
+  AccountUpgradeRequest.find({
+    city: city,
+    status: UpgradeRequestStatus.PENDING,
+  });

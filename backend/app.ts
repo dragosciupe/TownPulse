@@ -3,12 +3,13 @@ import cors from "cors";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 
-import { registerUser, loginUser } from "./src/route_methods/accounts";
+import { registerUser, loginUser } from "./src/route_methods/account-routes";
 import {
   upgradeAccountRequest,
   accountUpgradeRequestAction,
   getAccountUpgradeRequests,
-} from "./src/route_methods/account-upgrades";
+} from "./src/route_methods/account-upgrade-routes";
+import { addEvent } from "./src/route_methods/event-routes";
 
 import { PORT, MONGO_URL } from "./src/util";
 
@@ -27,6 +28,7 @@ app.post("/rejectAccountUpgrade", (req, res) =>
   accountUpgradeRequestAction(req, res, "reject")
 );
 app.get("/accountUpgradeRequests", getAccountUpgradeRequests);
+app.post("/addEvent", addEvent);
 
 app.listen(PORT, () => {
   console.log("Server started");

@@ -18,3 +18,12 @@ export type AccountUpgradeRequest = {
 export type RequestWithAccountId = {
   accountId: string;
 };
+
+export type AddEventRequest = {
+  creatorId: string;
+  title: string;
+  duration: number;
+  date: number;
+  description: string;
+  coordinates: [number, number];
+};

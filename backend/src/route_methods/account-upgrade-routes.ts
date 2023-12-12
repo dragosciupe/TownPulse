@@ -6,13 +6,13 @@ import {
 
 import {
   AccountUpgradeRequestModel,
-  findRequestByAccountId,
   findRequestById,
   addRequest,
   updateRequestStatus,
   getRequestsForAccount,
   getRequestsForTownHall,
 } from "../db/models/account-upgrade-requests";
+import { type UpgradeRequest } from "./response-types";
 
 import { findUserById, upgradeUserToCreator } from "../db/models/user";
 import { isRequestValid, AccountType, UpgradeRequestStatus } from "../util";
@@ -29,11 +29,15 @@ export const upgradeAccountRequest = async (req: Request, res: Response) => {
     return;
   }
 
-  const doesUserAlreadyRequested = await findRequestByAccountId(
-    upgradeRequest.accountId
-  );
-  if (doesUserAlreadyRequested) {
-    res.status(400).send("You already sent an account upgrade request");
+  const userRequests: Array<AccountUpgradeRequestModel> =
+    await getRequestsForAccount(upgradeRequest.accountId);
+
+  if (
+    userRequests.find(
+      (request) => request.status === UpgradeRequestStatus.PENDING
+    )
+  ) {
+    res.status(400).send("You already have a pending request");
     return;
   }
 
@@ -41,6 +45,7 @@ export const upgradeAccountRequest = async (req: Request, res: Response) => {
 
   const upgradeRequestModel: AccountUpgradeRequestModel = {
     accountId: upgradeRequest.accountId,
+    accountUsername: curUser.username,
     city: curUser.city,
     date: new Date().getTime(),
     status: UpgradeRequestStatus.PENDING,
@@ -101,7 +106,7 @@ export const accountUpgradeRequestAction = async (
       curUpgradeRequest._id.toString(),
       UpgradeRequestStatus.ACCEPTED
     );
-    res.send("Account upgraded succesfully");
+    res.send("Request accepted succesfully");
   } else {
     await updateRequestStatus(
       curUpgradeRequest._id.toString(),
@@ -116,9 +121,10 @@ export const getAccountUpgradeRequests = async (
   res: Response
 ) => {
   const requestsListRequest: RequestWithAccountId = {
-    accountId: req.body.accountId,
+    accountId: req.query.accountId as string,
   };
 
+  console.log(requestsListRequest);
   if (!isRequestValid(requestsListRequest)) {
     res
       .status(400)
@@ -132,12 +138,23 @@ export const getAccountUpgradeRequests = async (
     return;
   }
 
-  let requests: Array<AccountUpgradeRequestModel>;
+  let requests;
   if (user.accountType === AccountType.TOWN_HALL) {
     requests = await getRequestsForTownHall(user.city);
   } else {
     requests = await getRequestsForAccount(user._id.toString());
   }
 
-  res.json(requests);
+  const mappedResponse: Array<UpgradeRequest> = requests.map((request) => {
+    return {
+      requestId: request._id.toString(),
+      accountId: request.accountId,
+      accountUsername: request.accountUsername,
+      city: request.city,
+      date: request.date,
+      status: request.status,
+    };
+  });
+
+  res.json(mappedResponse);
 };

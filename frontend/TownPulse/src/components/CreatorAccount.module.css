@@ -1,0 +1,22 @@
+.divider {
+    margin: 10 8;
+    background-color: rebeccapurple;
+}
+
+.container {
+    text-align: center;
+}
+
+.result {
+    text-align: center;
+    margin-top: 24px;
+}
+
+.result.success {
+    color: green;
+}
+
+.result.error {
+    color: red;
+}
+

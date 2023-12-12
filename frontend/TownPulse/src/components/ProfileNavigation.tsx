@@ -1,5 +1,4 @@
-import { useRouteLoaderData, NavLink } from "react-router-dom";
-import { AccountType, UserData } from "../util/Types";
+import { NavLink } from "react-router-dom";
 import classes from "./ProfileNavigation.module.css";
 
 function isPageActive(isActive: boolean): string | undefined {
@@ -7,8 +6,6 @@ function isPageActive(isActive: boolean): string | undefined {
 }
 
 function ProfileNavigation() {
-  const userData = (useRouteLoaderData("root") as UserData)!;
-
   return (
     <nav className={classes.profile_navigation}>
       <ul>
@@ -29,19 +26,15 @@ function ProfileNavigation() {
             Saved events
           </NavLink>
         </li>
-        {userData.accountType === AccountType.NORMAL && (
-          <li>
-            <NavLink
-              to="/profile/creatorAccountPage"
-              className={({ isActive }) => isPageActive(isActive)}
-            >
-              Request a creator's account
-            </NavLink>
-          </li>
-        )}
-        {userData.accountType === AccountType.TOWN_HALL && (
-          <li>Creator requests</li>
-        )}
+
+        <li>
+          <NavLink
+            to="/profile/creatorAccountPage"
+            className={({ isActive }) => isPageActive(isActive)}
+          >
+            Creator's account
+          </NavLink>
+        </li>
       </ul>
     </nav>
   );

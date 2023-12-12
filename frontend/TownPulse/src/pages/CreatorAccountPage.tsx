@@ -1,51 +1,84 @@
-import { useRouteLoaderData, Form, useActionData } from "react-router-dom";
-import { AccountType, UserData } from "../util/Types";
+import {
+  useRouteLoaderData,
+  useLoaderData,
+  LoaderFunction,
+  json,
+} from "react-router-dom";
+import { AccountType, type UserData } from "../util/Types";
 import { getUserData } from "../util/Methods";
-import classes from "../components/Auth.module.css";
+import {
+  AccountUpgradeRequest,
+  type RequestWithAccountId,
+} from "../remote/request-types";
+import CreatorAccountHeader from "../components/CreatorAccountHeader";
+import CreatorRequests from "../components/CreatorRequests";
+import { UpgradeRequest, BasicResponse } from "../remote/response-types";
 
 function CreatorAccountPage() {
   const userData = useRouteLoaderData("root") as UserData;
-  const creatorRequestResponse = useActionData() as string;
+  const requestsList = useLoaderData() as Array<UpgradeRequest>;
 
   return (
     <>
-      {userData.accountType === AccountType.NORMAL ? (
-        <>
-          <h3 style={{ textAlign: "center" }}>
-            You can apply to become a creator on TownPulse.
-            <br />
-            As a creator you can post events for the people of your city to see
-            <br /> <br /> <br />
-            Note: Your city's town hall can approve or reject your request
-            however they see fit.
-          </h3>
-
-          <Form method="POST" className={classes.actions}>
-            <button>Request a creator account</button>
-          </Form>
-        </>
-      ) : undefined}
-      {creatorRequestResponse && (
-        <p
-          style={{ textAlign: "center", marginTop: "30px", fontSize: "larger" }}
-        >
-          {creatorRequestResponse}
-        </p>
-      )}
+      <CreatorAccountHeader
+        accountType={userData.accountType}
+        city={userData.city}
+      />
+      <CreatorRequests requestList={requestsList} />
     </>
   );
 }
 
 export default CreatorAccountPage;
 
-export async function creatorRequestAction() {
-  const accountId = getUserData()!.id;
+export async function creatorRequestAction({ request }) {
+  const userData = getUserData()!;
+  let urlEndpoint: string;
+  let requestBody: AccountUpgradeRequest | RequestWithAccountId;
 
-  const response = await fetch("http://localhost:3000/upgradeAccount", {
+  if (userData.accountType === AccountType.TOWN_HALL) {
+    const data = await request.formData();
+    console.log(`Form data is ${data}`);
+    const mode = data.get("mode");
+    const requestId = data.get("requestId");
+
+    urlEndpoint =
+      mode === "accept" ? "acceptAccountUpgrade" : "rejectAccountUpgrade";
+    requestBody = {
+      townHallAccountId: userData.id,
+      requestId: requestId,
+    };
+  } else {
+    requestBody = { accountId: userData.id };
+    urlEndpoint = "upgradeAccount";
+  }
+
+  const response = await fetch(`http://localhost:3000/${urlEndpoint}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ accountId: accountId }),
+    body: JSON.stringify(requestBody),
   });
 
-  return response;
+  const responseData = await response.text();
+
+  let creatorAccountResponse: BasicResponse<string> = {
+    status: response.ok,
+    data: responseData,
+  };
+
+  return json(creatorAccountResponse);
 }
+
+export const creatorRequestsLoader: LoaderFunction<UserData> = async () => {
+  const accountId = getUserData()!.id;
+  const accountIdParams: RequestWithAccountId = {
+    accountId: accountId,
+  };
+  const accountParams = new URLSearchParams(accountIdParams).toString();
+
+  const response = await fetch(
+    `http://localhost:3000/accountUpgradeRequests?${accountParams}`
+  );
+
+  return response;
+};

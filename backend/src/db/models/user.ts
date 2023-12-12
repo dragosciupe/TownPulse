@@ -1,4 +1,4 @@
-import mongoose, { ObjectId } from "mongoose";
+import mongoose from "mongoose";
 import { AccountType } from "../../util";
 
 export interface UserModel {
