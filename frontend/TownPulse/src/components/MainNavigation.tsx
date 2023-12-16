@@ -2,7 +2,7 @@ import { NavLink, useRouteLoaderData, Form } from "react-router-dom";
 
 import classes from "./MainNavigation.module.css";
 import { UserData } from "../util/Types";
-
+import logo from '../util/images/svjicon.png'
 function isPageActive(isActive: boolean): string | undefined {
   return isActive ? classes.active : undefined;
 }
@@ -12,7 +12,15 @@ function MainNavigation() {
 
   return (
     <header className={classes.header}>
+      <div>
+          <img src={logo} alt ='nu este poza' className={classes.image}/>
+          <p className={classes.bigP}>
+          <p className={classes.firstP}>TownPulse</p>
+          <p className={classes.secondP}>All events. One place</p>
+          </p>
+       </div>
       <nav>
+        
         <ul className={classes.list}>
           <li>
             <NavLink
