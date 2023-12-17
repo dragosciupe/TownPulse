@@ -7,20 +7,20 @@
   }
   
   .event {
-    width: 60%;
+    width: 25%;
     margin: 0 auto 7rem; 
-    background-color: #456e39;
+    display: inline-block;
+    margin: 20px;
+    background-color: #ffffff;
     border-radius: 1rem;
     border: 40px;
     overflow: hidden;
-    text-align: center;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+    font-family: 'Montserrat', sans-serif;
   }
   
   .event article {
     height: 100%;
-    display: flex;
-    flex-direction: column;
     justify-content: space-between;
   }
   
@@ -29,17 +29,39 @@
     height: 20rem;
     object-fit: cover;
   }
-  
+
+.bigP {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px; 
+}
+
+.bigP p {
+  margin: 0;
+  padding: 0;
+  color: rgb(36, 125, 177);
+
+}
   .event h3 {
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: bold;
+    text-align: left;
+    padding-left: 30px;
     margin: 0.75rem 0;
-    color: white;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: rgb(0, 0, 0);
+    
   }
   
   .event p {
-    margin: 1rem;
+    margin:0rem 1rem 0rem 1rem;
     font-size: 1rem;
     font-weight: bold;
+  }
+  
+  .lastP
+  {
+    text-align: left;
+    color:grey;
+    padding-left: 30px;
   }
