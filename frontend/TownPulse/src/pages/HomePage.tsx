@@ -4,9 +4,8 @@ import classes from "../components/HomePage.module.css";
 import FilterBar from "../components/FilterBar";
 function HomePage() {
   return (
-  
-   <div className={classes.mainDiv}>
-    <FilterBar />
+    <div className={classes.mainDiv}>
+      <FilterBar />
       <ul id={classes.events}>
         {EVENTS.map((ev) => (
           <Event
@@ -20,7 +19,7 @@ function HomePage() {
           />
         ))}
       </ul>
-      </div>
+    </div>
   );
 }
 
