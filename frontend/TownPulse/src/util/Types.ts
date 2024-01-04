@@ -25,3 +25,22 @@ export type EventProps = {
   date: Date;
   city: string;
 };
+
+export type PostComment = {
+  author: string;
+  date: number;
+  message: string;
+};
+
+export type Event = {
+  creatorId: string;
+  title: string;
+  duration: number;
+  date: number;
+  city: string;
+  description: string;
+  coordinates: [number, number];
+  likes: Array<string>;
+  comments: Array<PostComment>;
+  participants: Array<string>;
+};
