@@ -1,6 +1,6 @@
 import { type UpgradeRequest } from "../remote/response-types";
 import Request from "./Request.tsx";
-
+import classes from './Request.module.css';
 type CreatorRequestsProps = {
   requestList: Array<UpgradeRequest>;
 };
@@ -12,7 +12,7 @@ function CreatorRequests({ requestList }: CreatorRequestsProps) {
 
   return (
     <>
-      <ul>
+      <ul className={classes.requestUl}>
         {requestList.map((request) => (
           <li key={request.requestId}>
             <Request requestItem={request} />
