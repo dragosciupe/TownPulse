@@ -4,14 +4,19 @@
 }
 
 .container {
-    text-align: center;
+    max-width: 100%; /* Ensure the container takes up the full width of its parent */
+  
 }
 
 .result {
     text-align: center;
     margin-top: 24px;
 }
-
+.creatorAccH3{
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+}
 .result.success {
     color: green;
 }
@@ -20,3 +25,10 @@
     color: red;
 }
 
+.aplicabuton{
+    border-radius: 7px;
+    height: 30px;
+    width: 100px;
+    font-family: 'Montserrat', sans-serif;
+   
+ }

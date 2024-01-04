@@ -5,6 +5,8 @@
     display: flex;
     margin-top: 30px;
     justify-content: space-around;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
   }
   
   .profile_navigation ul {
@@ -24,7 +26,8 @@
   
   .profile_navigation ul a:hover,
   .profile_navigation ul a.active {
-    background-color: lightgreen;
-    border: 0.5px solid lightgreen;
+    background-color: #00003B;
+    border: 0.5px solid #00003B;
+    color: white;
     border-radius: 1rem;
   }

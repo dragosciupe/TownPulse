@@ -1,8 +1,11 @@
+import "@fortawesome/fontawesome-free/css/all.css";
 import { UpgradeRequest } from "../remote/response-types";
 import { AccountType, type UserData } from "../util/Types";
 import { useRouteLoaderData, useSubmit } from "react-router-dom";
 import { upgradeRequestStatusToString } from "../util/Methods";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import classes from "./Request.module.css";
 type RequestProps = {
   requestItem: UpgradeRequest;
 };
@@ -26,26 +29,32 @@ function Request({ requestItem }: RequestProps) {
 
   if (userData.accountType === AccountType.TOWN_HALL) {
     return (
-      <div>
-        <div>
-          <label>Username:</label>
-          <label>{requestItem.accountUsername}</label>
+      <div className={classes.requestBigDiv}>
+        <div className={classes.requestCredentialsDivI}>
+          <div>
+            <FontAwesomeIcon icon={faUser} className={classes.requestIcon} />
+          </div>
+          <div className={classes.requestCredentialsDiv}>
+            <div>
+              <label>Username:</label>
+              <label>{requestItem.accountUsername}</label>
+            </div>
+          
+           <div>
+            <label>Date:</label>
+            <label>{formattedDate}</label>
+            </div>
+          </div>
         </div>
-
-        <div>
-          <label>Date:</label>
-          <label>{formattedDate}</label>
-        </div>
-
-        <div>
-          <button onClick={() => handleActionTrigger("accept")}>Accepta</button>
-          <button onClick={() => handleActionTrigger("reject")}>Refuza</button>
+        <div className={classes.requestBtnDiv}>
+          <button className={classes.requestBtn} onClick={() => handleActionTrigger("accept")}>Accepta</button>
+          <button className={classes.requestBtn} onClick={() => handleActionTrigger("reject")}>Refuza</button>
         </div>
       </div>
     );
   } else {
     return (
-      <div>
+      <div className={classes.requestBigDiv}>
         <div>
           <label>Date:</label>
           <label>{formattedDate}</label>

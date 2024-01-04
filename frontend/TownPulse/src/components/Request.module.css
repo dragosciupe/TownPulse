@@ -1,0 +1,40 @@
+.requestUl{
+    list-style: none;
+}
+
+.requestBigDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 400px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+    border-radius: 7px;
+    font-family: 'Montserrat', sans-serif;
+    padding: 10px;
+}
+
+.requestBtnDiv{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+   
+}
+.requestBtn{
+    margin:5px;
+    border-radius: 7px;
+    font-family: 'Montserrat', sans-serif;
+
+}
+.requestIcon{
+    height: 2rem;
+}
+.requestCredentialsDivI{
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   margin-left: 5px;
+}
+.requestCredentialsDiv{
+    display: flex;
+    flex-direction: column;
+ }

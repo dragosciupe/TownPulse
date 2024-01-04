@@ -20,11 +20,11 @@ function CreatorAccountHeader({
   if (accountType === AccountType.TOWN_HALL) {
     mainContent = (
       <div className={classes.container}>
-        <h3>
+        <h2 className={classes.creatorAccH3}>
           In calitate de reprezentat al primariei orasului {city},puteti accepta
           cererile institutiilor si companiilor care doresc sa obtina cont de
           creator pentru orasul dumnevoastra
-        </h3>
+        </h2>
       </div>
     );
   } else {
@@ -42,7 +42,7 @@ function CreatorAccountHeader({
 
         {accountType === AccountType.NORMAL ? (
           <Form method="POST">
-            <button>Aplica</button>
+            <button className={classes.aplicabuton}>Aplica</button>
           </Form>
         ) : (
           <button disabled>Esti deja creator</button>

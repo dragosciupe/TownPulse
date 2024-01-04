@@ -5,6 +5,7 @@
     display: flex;
     justify-content: space-around;
     background-color: #00003B;
+    box-sizing: border-box;
     position:fixed;
     width:100%;
     top:0;
@@ -22,6 +23,7 @@
     margin-top: 10px;
     display: inline-block;
     padding-bottom: 7px;
+    
   }
 
   .bigP{
@@ -56,8 +58,10 @@
   .list {
     list-style: none;
     display: flex;
+    align-items: center;
     padding-top: 10px;
     gap: 1rem;
+    margin-right: 50px;
   }
   
   .list a {
@@ -85,14 +89,14 @@
   padding: 0.5rem;
   background: transparent;
   text-decoration: none;
-  color: black;
+  color: rgb(255, 255, 255);
   border: 0.5px solid transparent;
   margin-top: 0;
 }
 
 #logout_button:hover {
   background-color: lightgray;
-  color:black;
+  color:rgb(0, 0, 0);
   border: 0.5px solid lightgray;
   border-radius: 1rem;
   margin: 0;
