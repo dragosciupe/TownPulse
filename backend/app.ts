@@ -9,7 +9,7 @@ import {
   accountUpgradeRequestAction,
   getAccountUpgradeRequests,
 } from "./src/route_methods/account-upgrade-routes";
-import { addEvent } from "./src/route_methods/event-routes";
+import { addEvent, likeEvent } from "./src/route_methods/event-routes";
 
 import { PORT, MONGO_URL } from "./src/util";
 
@@ -29,6 +29,7 @@ app.post("/rejectAccountUpgrade", (req, res) =>
 );
 app.get("/accountUpgradeRequests", getAccountUpgradeRequests);
 app.post("/addEvent", addEvent);
+app.post("/likeEvent", likeEvent);
 
 app.listen(PORT, () => {
   console.log("Server started");
