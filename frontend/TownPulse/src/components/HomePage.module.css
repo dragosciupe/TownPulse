@@ -5,7 +5,9 @@
     margin: 2rem auto;
     padding: 1rem;
   }
-  
+  .mainDiv{
+    display: flex;
+  }
   .event {
     width: 25%;
     margin: 0 auto 7rem; 
