@@ -27,3 +27,8 @@ export type AddEventRequest = {
   description: string;
   coordinates: [number, number];
 };
+
+export type LikeEventRequest = {
+  eventId: string;
+  accountId: string;
+};
