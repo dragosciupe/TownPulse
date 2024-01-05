@@ -1,18 +1,25 @@
 import { Request, Response } from "express";
 
-import { LikeEventRequest, type AddEventRequest } from "./request-types";
+import {
+  LikeEventRequest,
+  type AddEventRequest,
+  AddCommentRequest,
+} from "./request-types";
 import { isRequestValid } from "../util";
 import {
   addEvent as addNewEvent,
   EventModel,
   findEventById,
+  PostComment,
+  updateCommentsById,
   updateLikesById,
+  updateParticipantsById,
 } from "../db/models/events";
-import { findUserById } from "../db/models/user";
+import { findUserByUsername } from "../db/models/user";
 
 export const addEvent = async (req: Request, res: Response) => {
   const addEventRequest: AddEventRequest = {
-    creatorId: req.body.creatorId,
+    creatorUsername: req.body.creatorUsername,
     title: req.body.title,
     duration: req.body.duration,
     date: req.body.date,
@@ -27,11 +34,19 @@ export const addEvent = async (req: Request, res: Response) => {
     return;
   }
 
-  const eventPoster = (await findUserById(addEventRequest.creatorId))!;
+  const eventPoster = (await findUserByUsername(
+    addEventRequest.creatorUsername
+  ))!;
+
+  if (eventPoster.accountType === 0) {
+    res.status(400).send("You do not have creator rights");
+    return;
+  }
 
   const eventToAdd: EventModel = {
     ...addEventRequest,
     city: eventPoster.city,
+    photoUrl: "test-url",
     likes: Array(),
     comments: Array(),
     participants: Array(),
@@ -41,7 +56,11 @@ export const addEvent = async (req: Request, res: Response) => {
   res.send("Event was added succesfully");
 };
 
-export const likeEvent = async (req: Request, res: Response) => {
+export const eventAction = async (
+  req: Request,
+  res: Response,
+  type: "likes" | "participants"
+) => {
   const likeEventRequest: LikeEventRequest = {
     eventId: req.body.eventId,
     accountId: req.body.accountId,
@@ -55,15 +74,60 @@ export const likeEvent = async (req: Request, res: Response) => {
   }
 
   const event = (await findEventById(likeEventRequest.eventId))!;
-  let likes = event.likes;
 
-  if (likes.find((userId) => userId === likeEventRequest.accountId)) {
-    likes = likes.filter((userId) => userId !== likeEventRequest.accountId);
+  if (type === "likes") {
+    let likes = event.likes;
+
+    if (likes.find((userId) => userId === likeEventRequest.accountId)) {
+      likes = likes.filter((userId) => userId !== likeEventRequest.accountId);
+    } else {
+      likes.push(likeEventRequest.accountId);
+    }
+
+    await updateLikesById(likeEventRequest.eventId, likes);
   } else {
-    likes.push(likeEventRequest.accountId);
+    let participants = event.participants;
+
+    if (participants.find((userId) => userId === likeEventRequest.accountId)) {
+      participants = participants.filter(
+        (userId) => userId !== likeEventRequest.accountId
+      );
+    } else {
+      participants.push(likeEventRequest.accountId);
+    }
+
+    await updateParticipantsById(likeEventRequest.eventId, participants);
   }
 
-  await updateLikesById(likeEventRequest.eventId, likes);
+  res.send("Event updated successfully");
+};
 
-  res.send("Likes updated successfully");
+export const addComment = async (req: Request, res: Response) => {
+  const addCommentRequest: AddCommentRequest = {
+    eventId: req.body.eventId,
+    author: req.body.author,
+    date: req.body.date,
+    message: req.body.message,
+  };
+
+  if (!isRequestValid(addCommentRequest)) {
+    res
+      .status(400)
+      .send("Request object does not have all the correct properties");
+    return;
+  }
+
+  const commentToAdd: PostComment = {
+    author: addCommentRequest.author,
+    date: addCommentRequest.date,
+    message: addCommentRequest.message,
+  };
+
+  const eventToEdit = (await findEventById(addCommentRequest.eventId))!;
+  const comments = eventToEdit.comments;
+  comments.push(commentToAdd);
+
+  await updateCommentsById(addCommentRequest.eventId, comments);
+
+  res.send("Comment added successfully");
 };

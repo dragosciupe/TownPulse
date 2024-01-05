@@ -1,3 +1,5 @@
+import { PostComment } from "../db/models/events";
+
 export type RegisterAccountRequest = {
   username: string;
   password: string;
@@ -20,7 +22,7 @@ export type RequestWithAccountId = {
 };
 
 export type AddEventRequest = {
-  creatorId: string;
+  creatorUsername: string;
   title: string;
   duration: number;
   date: number;
@@ -32,3 +34,7 @@ export type LikeEventRequest = {
   eventId: string;
   accountId: string;
 };
+
+export type AddCommentRequest = {
+  eventId: string;
+} & PostComment;
