@@ -18,3 +18,12 @@ export type AccountUpgradeRequest = {
   townHallAccountId: string;
   requestId: string;
 };
+
+export type AddEventRequest = {
+  creatorUsername: string;
+  title: string;
+  duration: number;
+  date: number;
+  description: string;
+  coordinates: [number, number];
+};

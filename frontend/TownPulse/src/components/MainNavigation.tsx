@@ -20,7 +20,7 @@ function MainNavigation() {
           </p>
        </div>
       <nav>
-        
+          
         <ul className={classes.list}>
           <li>
             <NavLink
@@ -40,7 +40,7 @@ function MainNavigation() {
             </NavLink>
           </li>
 
-          <li>
+         <li>
             <NavLink
               to="/addEvent"
               className={({ isActive }) => isPageActive(isActive)}

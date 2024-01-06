@@ -21,11 +21,18 @@
     font-family: 'Montserrat', sans-serif;
   }
   
-  .event article {
+  .eventLink {
     height: 100%;
     justify-content: space-between;
+    text-decoration: none;
+    transition: transform 0.3s ease-in-out;
+
   }
-  
+  .creator{
+    font-size: 1rem;
+    color: black;
+    margin-left: 25px;
+  }
   .event img {
     width: 100%;
     height: 20rem;
@@ -66,4 +73,12 @@
     text-align: left;
     color:grey;
     padding-left: 30px;
+  }
+  .Link{
+    text-decoration: none;
+  }
+  .eventLink:hover {
+    transform: scale(1.02);
+    background-color: var(--color-gray-700);
+    z-index: -1;
   }
