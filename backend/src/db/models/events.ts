@@ -1,17 +1,18 @@
 import mongoose, { Schema, SchemaType } from "mongoose";
 
-export type PostComment = {
+export interface PostComment {
   author: string;
   date: number;
   message: string;
-};
+}
 
 export interface EventModel {
-  creatorId: string;
+  creatorUsername: string;
   title: string;
   duration: number;
   date: number;
   city: string;
+  photoUrl: string;
   description: string;
   coordinates: [number, number];
   likes: Array<string>;
@@ -19,15 +20,23 @@ export interface EventModel {
   participants: Array<string>;
 }
 
+const PostCommentSchema = new mongoose.Schema<PostComment>({
+  author: { type: String, required: true },
+  date: { type: Number, required: true },
+  message: { type: String, required: true },
+});
+
 const eventSchema = new mongoose.Schema<EventModel>({
-  creatorId: { type: String, required: true },
+  creatorUsername: { type: String, required: true },
   title: { type: String, required: true },
   duration: { type: Number, required: true },
   date: { type: Number, required: true },
   city: { type: String, required: true },
+  photoUrl: { type: String, required: true },
   description: { type: String, required: true },
   coordinates: { type: [Number], required: true },
   likes: { type: [String], required: true },
+  comments: { type: [PostCommentSchema], required: true },
   participants: { type: [String], required: true },
 });
 
@@ -44,5 +53,16 @@ export const getEventsByCity = (eventsCity: string) =>
 export const getEvents = EventModel.find();
 
 export const findEventById = (eventId: string) => EventModel.findById(eventId);
+
 export const updateLikesById = (eventId: string, likes: Array<string>) =>
   EventModel.findByIdAndUpdate(eventId, { likes: likes });
+
+export const updateParticipantsById = (
+  eventId: string,
+  participants: Array<string>
+) => EventModel.findByIdAndUpdate(eventId, { participants: participants });
+
+export const updateCommentsById = (
+  eventId: string,
+  comments: Array<PostComment>
+) => EventModel.findByIdAndUpdate(eventId, { comments: comments });
