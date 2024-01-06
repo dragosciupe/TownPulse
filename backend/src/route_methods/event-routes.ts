@@ -27,7 +27,8 @@ export const addEvent = async (req: Request, res: Response) => {
     description: req.body.description,
     coordinates: req.body.coordinates,
   };
-
+  console.log(req.body)
+  console.log(addEventRequest)
   if (!isRequestValid(addEventRequest)) {
     res
       .status(400)
