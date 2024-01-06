@@ -1,38 +1,41 @@
 import { Link } from "react-router-dom";
-import { EventProps } from "../util/Types";
 import classes from "./HomePage.module.css";
+import { Event as EventModel } from "../util/Types";
+import orchestra from "../util/images/concer-orchestra.jpg";
 
-export default function Event({
-  id,
-  title,
-  img,
-  desc,
-  date,
-  city,
-}: EventProps) {
-  const formattedDate = new Date(date).toLocaleDateString();
+type EventProps = {
+  event: EventModel;
+};
+
+export default function Event({ event }: EventProps) {
+  const dateConstructor = new Date(event.date);
+  const day = dateConstructor.getDate();
+  const month = dateConstructor.getMonth() + 1;
+  const year = dateConstructor.getFullYear();
+  const formattedDate = `${day}/${month}/${year}`;
 
   return (
     <li className={classes.event}>
       <div className={classes.eventLink}>
-      <Link to={`/${id}`} className={classes.Link}>
-        <img src={img} alt={id} />
-        <div>
-          <div className={classes.bigP}>
-            <p>{formattedDate}</p>
-            <p>{city}</p>
+        <Link to={`/${event.id}`} className={classes.Link}>
+          <img src={orchestra} alt={event.id} />
+          <div>
+            <div className={classes.bigP}>
+              <p>{formattedDate}</p>
+              <p>{event.city}</p>
+            </div>
+            <h3>{event.title}</h3>
+            <h2 className={classes.creator}>Creator</h2>
+            <p style={{ fontWeight: "normal", paddingLeft: "13px" }}>
+              {event.description}
+            </p>
+            <div style={{ padding: "20px" }} className={classes.bigP}>
+              <p>{event.likes.length} Likes</p>
+              <p>{event.comments.length} Comentarii</p>
+              <p>{event.participants.length} Participanti</p>
+            </div>
           </div>
-          <h3>{title}</h3>
-          <h2 className={classes.creator}>Creator</h2>
-          <p style={{ fontWeight: "normal", paddingLeft:"13px" }}>{desc}</p>
-          <div style={{padding:"20px"}}className={classes.bigP}>
-            <p>Likes</p>
-            <p>Comentarii</p>
-            <p>Participanti</p>
-          </div>
-        </div>
-        
-      </Link>
+        </Link>
       </div>
     </li>
   );

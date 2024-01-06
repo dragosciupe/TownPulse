@@ -17,14 +17,6 @@ export type UserData = {
   email: string;
   accountType: AccountType;
 };
-export type EventProps = {
-  id: string;
-  title: string;
-  img: string;
-  desc: string;
-  date: Date;
-  city: string;
-};
 
 export type PostComment = {
   author: string;
@@ -33,6 +25,7 @@ export type PostComment = {
 };
 
 export type Event = {
+  id: string;
   creatorUsername: string;
   title: string;
   duration: number;

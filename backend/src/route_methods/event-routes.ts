@@ -8,6 +8,7 @@ import {
 import { isRequestValid } from "../util";
 import {
   addEvent as addNewEvent,
+  getEvents as getAllEvents,
   EventModel,
   findEventById,
   PostComment,
@@ -16,13 +17,13 @@ import {
   updateParticipantsById,
 } from "../db/models/events";
 import { findUserByUsername } from "../db/models/user";
+import { ObjectId } from "mongoose";
 
 export const addEvent = async (req: Request, res: Response) => {
   const addEventRequest: AddEventRequest = {
     creatorUsername: req.body.creatorUsername,
     title: req.body.title,
     duration: req.body.duration,
-    date: req.body.date,
     description: req.body.description,
     coordinates: req.body.coordinates,
   };
@@ -45,6 +46,7 @@ export const addEvent = async (req: Request, res: Response) => {
 
   const eventToAdd: EventModel = {
     ...addEventRequest,
+    date: new Date().getTime(),
     city: eventPoster.city,
     photoUrl: "test-url",
     likes: Array(),
@@ -54,6 +56,33 @@ export const addEvent = async (req: Request, res: Response) => {
 
   await addNewEvent(eventToAdd);
   res.send("Event was added succesfully");
+};
+
+export const getEvents = async (req: Request, res: Response) => {
+  type EventToSend = {
+    id: string;
+  } & EventModel;
+
+  const allEvents = await getAllEvents();
+
+  const eventsToSend: Array<EventToSend> = allEvents.map((event) => {
+    return {
+      id: event._id.toString(),
+      creatorUsername: event.creatorUsername,
+      title: event.title,
+      duration: event.duration,
+      date: event.date,
+      city: event.city,
+      photoUrl: event.photoUrl,
+      description: event.description,
+      coordinates: event.coordinates,
+      likes: event.likes,
+      comments: event.comments,
+      participants: event.participants,
+    };
+  });
+
+  res.json(eventsToSend);
 };
 
 export const eventAction = async (

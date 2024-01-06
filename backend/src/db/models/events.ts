@@ -50,7 +50,7 @@ export async function addEvent(event: EventModel) {
 export const getEventsByCity = (eventsCity: string) =>
   EventModel.find({ city: eventsCity });
 
-export const getEvents = EventModel.find();
+export const getEvents = () => EventModel.find();
 
 export const findEventById = (eventId: string) => EventModel.findById(eventId);
 

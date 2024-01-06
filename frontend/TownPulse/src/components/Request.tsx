@@ -23,7 +23,7 @@ function Request({ requestItem }: RequestProps) {
 
   const dateConstructor = new Date(requestItem.date);
   const day = dateConstructor.getDate();
-  const month = dateConstructor.getMonth();
+  const month = dateConstructor.getMonth() + 1;
   const year = dateConstructor.getFullYear();
   const formattedDate = `${day}/${month}/${year}`;
 
@@ -39,16 +39,26 @@ function Request({ requestItem }: RequestProps) {
               <label>Username:</label>
               <label>{requestItem.accountUsername}</label>
             </div>
-          
-           <div>
-            <label>Date:</label>
-            <label>{formattedDate}</label>
+
+            <div>
+              <label>Date:</label>
+              <label>{formattedDate}</label>
             </div>
           </div>
         </div>
         <div className={classes.requestBtnDiv}>
-          <button className={classes.requestBtn} onClick={() => handleActionTrigger("accept")}>Accepta</button>
-          <button className={classes.requestBtn} onClick={() => handleActionTrigger("reject")}>Refuza</button>
+          <button
+            className={classes.requestBtn}
+            onClick={() => handleActionTrigger("accept")}
+          >
+            Accepta
+          </button>
+          <button
+            className={classes.requestBtn}
+            onClick={() => handleActionTrigger("reject")}
+          >
+            Refuza
+          </button>
         </div>
       </div>
     );

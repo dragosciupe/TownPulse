@@ -1,22 +1,19 @@
 import Event from "../components/Event";
-import { EVENTS } from "../util/Constants";
 import classes from "../components/HomePage.module.css";
 import FilterBar from "../components/FilterBar";
+import { Event as EventModel } from "../util/Types";
+import { LoaderFunction, useLoaderData } from "react-router-dom";
+
 function HomePage() {
+  const events = useLoaderData() as Array<EventModel>;
+  console.log(events);
+
   return (
     <div className={classes.mainDiv}>
       <FilterBar />
       <ul id={classes.events}>
-        {EVENTS.map((ev) => (
-          <Event
-            key={ev.id}
-            id={ev.id}
-            title={ev.title}
-            img={ev.img}
-            date={new Date(ev.date)}
-            desc={ev.desc}
-            city={ev.city}
-          />
+        {events.map((ev) => (
+          <Event key={ev.id} event={ev} />
         ))}
       </ul>
     </div>
@@ -24,3 +21,9 @@ function HomePage() {
 }
 
 export default HomePage;
+
+export const eventsLoader: LoaderFunction<Array<EventModel>> = async () => {
+  const response = await fetch(`http://localhost:3000/getAllEvents`);
+
+  return response;
+};
