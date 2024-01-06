@@ -1,0 +1,37 @@
+.Bdiv{
+    display: flex;
+    justify-content: center;
+}
+.addEvForm p{
+    display: flex;
+    flex-direction: column;
+    min-width: 599px;
+    padding: 7px 0px;
+    font-family: 'Montserrat', sans-serif;
+    
+}
+.addEvForm input{
+    max-width: 600px;
+
+}
+.addEvFormDesc{
+    height: 70px;
+}
+
+.addEvLabel{
+    text-align: left;
+    margin-left: 110px;
+}
+.addEvBtn{
+    height: 50px;
+    margin-top: 10px;
+    border-radius: 7px;
+    color: rgb(0, 0, 0);
+    background-color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.addEvBtn:hover{
+    background-color:#00003B;
+    color:white;
+}
