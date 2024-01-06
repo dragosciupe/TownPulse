@@ -33,11 +33,12 @@ export type PostComment = {
 };
 
 export type Event = {
-  creatorId: string;
+  creatorUsername: string;
   title: string;
   duration: number;
   date: number;
   city: string;
+  photoUrl: string;
   description: string;
   coordinates: [number, number];
   likes: Array<string>;
