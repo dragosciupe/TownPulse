@@ -17,7 +17,6 @@ export const enum UpgradeRequestStatus {
   REJECTED,
 }
 
-
 export type UserData = {
   id: string;
   username: string;
@@ -40,7 +39,6 @@ export type Event = {
   duration: number;
   date: number;
   city: string;
-  photoUrl: string;
   description: string;
   coordinates: [number, number];
   likes: Array<string>;

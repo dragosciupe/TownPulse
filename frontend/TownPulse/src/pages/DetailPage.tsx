@@ -1,7 +1,4 @@
-import {
-  type EventModel,
-  PostComment,
-} from "../../../../backend/src/db/models/events";
+import { EventType, type Event, type PostComment } from "../util/Types";
 import ted from "../util/images/conferinta.jpg";
 import classes from "../components/DeatilPage.module.css";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
@@ -21,14 +18,16 @@ const comment1: PostComment = {
   date: new Date().getTime(),
   message: "This is a sample comment!.",
 };
-const data: EventModel = {
+const data: Event = {
+  id: "test",
   creatorUsername: "JohnDoe",
+  type: EventType.CULTURAL,
   title: "Sample Event",
   duration: 3,
   date: new Date().getTime(),
   city: "Sample City",
-  photoUrl: ted,
-  description: "A TED talk is a recorded public-speaking presentation that was originally given at the main TED (technology, entertainment and design) annual event or one of its many satellite events around the world. TED is a nonprofit devoted to spreading ideas, usually in the form of short, powerful talks, often called ",
+  description:
+    "A TED talk is a recorded public-speaking presentation that was originally given at the main TED (technology, entertainment and design) annual event or one of its many satellite events around the world. TED is a nonprofit devoted to spreading ideas, usually in the form of short, powerful talks, often called ",
   coordinates: [37.7749, -122.4194],
   likes: ["User1", "User2"],
   comments: [comment, comment1],
@@ -63,12 +62,12 @@ export default function DetailPage() {
     return formattedDate;
   }
   console.log(ted);
-  
+
   return (
     <div className={classes.mainDiv}>
       <div
         style={{
-          backgroundImage: `url(${data.photoUrl})`,
+          backgroundImage: `url(${ted})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           width: "100%",
@@ -117,15 +116,23 @@ export default function DetailPage() {
         </div>
       </div>
       <div>
-        <div style={{display:"flex",justifyContent:'space-between',}} >
-        <div style={{width:"50%",textAlign:'center',fontSize:'24px'}}>{data.description}</div>
-        <div style={{width:"40%",height:"300px !important",borderRadius:"10px",}}>
-          <Mapp />
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div style={{ width: "50%", textAlign: "center", fontSize: "24px" }}>
+            {data.description}
+          </div>
+          <div
+            style={{
+              width: "40%",
+              height: "300px !important",
+              borderRadius: "10px",
+            }}
+          >
+            <Mapp />
           </div>
         </div>
         <div className={classes.commDiv}>
           <p className={classes.comm}>Comentarii</p>
-          <ul >
+          <ul>
             {data.comments.map((com) => (
               <li key={com.message} className={classes.commUl}>
                 <h3>{com.author}</h3>
