@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 
+import fs from "fs";
+
 import {
   LikeEventRequest,
   type AddEventRequest,
@@ -17,18 +19,18 @@ import {
   updateParticipantsById,
 } from "../db/models/events";
 import { findUserByUsername } from "../db/models/user";
-import { ObjectId } from "mongoose";
 
 export const addEvent = async (req: Request, res: Response) => {
   const addEventRequest: AddEventRequest = {
     creatorUsername: req.body.creatorUsername,
     title: req.body.title,
     duration: req.body.duration,
+    date: req.body.date,
     description: req.body.description,
     coordinates: req.body.coordinates,
+    photo: req.body.photo,
   };
-  console.log(req.body)
-  console.log(addEventRequest)
+
   if (!isRequestValid(addEventRequest)) {
     res
       .status(400)
@@ -47,15 +49,32 @@ export const addEvent = async (req: Request, res: Response) => {
 
   const eventToAdd: EventModel = {
     ...addEventRequest,
-    date: new Date().getTime(),
     city: eventPoster.city,
-    photoUrl: "test-url",
     likes: Array(),
     comments: Array(),
     participants: Array(),
   };
 
-  await addNewEvent(eventToAdd);
+  const newEvent = await addNewEvent(eventToAdd);
+
+  //saving the event image
+  const base64EventImage = addEventRequest.photo;
+
+  const dataWithoutPrefix = base64EventImage.replace(
+    /^data:image\/\w+;base64,/,
+    ""
+  );
+  const buffer = Buffer.from(dataWithoutPrefix, "base64");
+  const filePath = `public/images/${newEvent._id}.jpg`;
+
+  fs.writeFile(filePath, buffer, (err) => {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log("Image saved successfully!");
+    }
+  });
+
   res.send("Event was added succesfully");
 };
 
@@ -74,7 +93,6 @@ export const getEvents = async (req: Request, res: Response) => {
       duration: event.duration,
       date: event.date,
       city: event.city,
-      photoUrl: event.photoUrl,
       description: event.description,
       coordinates: event.coordinates,
       likes: event.likes,

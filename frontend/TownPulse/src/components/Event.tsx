@@ -18,14 +18,17 @@ export default function Event({ event }: EventProps) {
     <li className={classes.event}>
       <div className={classes.eventLink}>
         <Link to={`/${event.id}`} className={classes.Link}>
-          <img src={orchestra} alt={event.id} />
+          <img
+            src={`http://localhost:3000/images/${event.id}.jpg`}
+            alt={event.id}
+          />
           <div>
             <div className={classes.bigP}>
               <p>{formattedDate}</p>
               <p>{event.city}</p>
             </div>
             <h3>{event.title}</h3>
-            <h2 className={classes.creator}>Creator</h2>
+            <h2 className={classes.creator}>{event.creatorUsername}</h2>
             <p style={{ fontWeight: "normal", paddingLeft: "13px" }}>
               {event.description}
             </p>
