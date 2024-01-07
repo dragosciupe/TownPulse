@@ -1,4 +1,4 @@
-import { NavLink, useRouteLoaderData, Form } from "react-router-dom";
+import { NavLink, useRouteLoaderData, Form, useMatch } from "react-router-dom";
 
 import classes from "./MainNavigation.module.css";
 import { UserData } from "../util/Types";
@@ -9,7 +9,8 @@ function isPageActive(isActive: boolean): string | undefined {
 
 function MainNavigation() {
   const userData = useRouteLoaderData("root") as UserData;
-
+  const ruote = useMatch('/:eventid')
+  console.log(ruote);
   return (
     <header className={classes.header}>
       <div>

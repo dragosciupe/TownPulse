@@ -1,0 +1,76 @@
+.mainDiv{
+    font-family: 'Montserrat', sans-serif;
+}
+.detailPageImg h2{
+    
+    font-weight: normal;
+    padding: 10px 0px;
+    margin: 0;
+}
+.detailPageTitle{
+    font-weight: bold;
+    font-size: 60px;
+}
+.firstDiv{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid rgba(128, 128, 128, 0.5);
+}
+.iconDetailDiv{
+    display: flex;
+    margin-left: 20px;
+    padding-bottom: 5px;
+}
+
+.likesDiv{
+    display: flex;
+    flex-direction: column;
+    margin-right: 50px;
+    
+}
+.smallDetailDiv{
+    display: flex;
+    padding-bottom: 5px;
+}
+.detailPageBtn{
+    background-color: #9191c7;
+    color: white;
+    margin-right: 7px;
+    border-radius: 7px;
+    height: 20;
+    font-family: 'Montserrat', sans-serif;
+}
+.detailPageBtnLike{
+ width: 160px;
+}
+.detailPageBtn:hover,
+.detailPageBtn:active{
+    background-color: white;
+    color:black;
+
+}
+.mapDiv{
+    display: flex;
+    margin: 50px;
+}
+.commDiv{
+    margin-left: 50px;
+}
+.comm{
+    font-weight: bold;
+    font-size: 2rem;
+
+}
+.commUl{
+box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+list-style: none;
+display: block;
+padding: 7px;
+margin: 10px;
+border-radius: 7px;
+max-width: 400px;
+}
