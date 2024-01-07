@@ -39,7 +39,6 @@ export type Event = {
   duration: number;
   date: number;
   city: string;
-  photoUrl: string;
   description: string;
   coordinates: [number, number];
   likes: Array<string>;

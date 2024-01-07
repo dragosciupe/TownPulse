@@ -5,7 +5,7 @@ import HomePage, { eventsLoader } from "./pages/HomePage.tsx";
 import EventsCalendarPage from "./pages/EventsCalendarPage.tsx";
 import AddEventPage,{action as addEventAction} from "./pages/AddEventPage.tsx";
 import RootProfileLayout from "./pages/RootProfileLayout.tsx";
-import DetailPage from "./pages/DetailPage.tsx";
+import DetailPage, {/*loader as detailPageLoader*/} from "./pages/DetailPage.tsx";
 import AuthenticationPage, {
   action as authAction,
 } from "./pages/AuthenticationPage.tsx";
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
     loader: authLoader,
     children: [
       { index: true, element: <HomePage />, loader: eventsLoader },
-      { path: "/:eventid", element: <DetailPage /> },
+      { path: "/:eventid", element: <DetailPage />,/* loader: detailPageLoader */},
       { path: "/eventsCalendar", element: <EventsCalendarPage /> },
       { path: "/addEvent", element: <AddEventPage />,action:addEventAction },
       {

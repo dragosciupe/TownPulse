@@ -3,6 +3,7 @@
     /*margin: 0; */
     margin-bottom: 50px;
     display: flex;
+    box-sizing: border-box;
     justify-content: space-around;
     background-color: #00003B;
     box-sizing: border-box;
