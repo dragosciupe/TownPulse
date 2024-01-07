@@ -12,7 +12,6 @@ export interface EventModel {
   duration: number;
   date: number;
   city: string;
-  photoUrl: string;
   description: string;
   coordinates: [number, number];
   likes: Array<string>;
@@ -32,7 +31,6 @@ const eventSchema = new mongoose.Schema<EventModel>({
   duration: { type: Number, required: true },
   date: { type: Number, required: true },
   city: { type: String, required: true },
-  photoUrl: { type: String, required: true },
   description: { type: String, required: true },
   coordinates: { type: [Number], required: true },
   likes: { type: [String], required: true },
@@ -42,9 +40,9 @@ const eventSchema = new mongoose.Schema<EventModel>({
 
 const EventModel = mongoose.model<EventModel>("Events", eventSchema);
 
-export async function addEvent(event: EventModel) {
+export function addEvent(event: EventModel) {
   const newEvent = new EventModel(event);
-  await newEvent.save();
+  return newEvent.save();
 }
 
 export const getEventsByCity = (eventsCity: string) =>

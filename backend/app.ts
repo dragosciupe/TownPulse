@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
-import bodyParser from "body-parser";
+import path from "path";
 
 import { registerUser, loginUser } from "./src/route_methods/account-routes";
 import {
@@ -21,7 +21,9 @@ import { PORT, MONGO_URL } from "./src/util";
 const app = express();
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json({ limit: "50mb" }));
+app.use(express.static("public"));
+app.use("/images", express.static(path.join(__dirname, "public", "images")));
 
 app.post("/registerAccount", registerUser);
 app.post("/loginAccount", loginUser);

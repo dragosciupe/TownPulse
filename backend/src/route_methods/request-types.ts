@@ -25,8 +25,10 @@ export type AddEventRequest = {
   creatorUsername: string;
   title: string;
   duration: number;
+  date: number;
   description: string;
   coordinates: [number, number];
+  photo: string;
 };
 
 export type LikeEventRequest = {
