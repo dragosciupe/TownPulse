@@ -1,4 +1,5 @@
 import { PostComment } from "../db/models/events";
+import { EventType } from "../util";
 
 export type RegisterAccountRequest = {
   username: string;
@@ -23,6 +24,7 @@ export type RequestWithAccountId = {
 
 export type AddEventRequest = {
   creatorUsername: string;
+  eventType: EventType;
   title: string;
   duration: number;
   date: number;

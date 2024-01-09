@@ -21,7 +21,7 @@ const comment1: PostComment = {
 const data: Event = {
   id: "test",
   creatorUsername: "JohnDoe",
-  type: EventType.CULTURAL,
+  eventType: EventType.CULTURAL,
   title: "Sample Event",
   duration: 3,
   date: new Date().getTime(),

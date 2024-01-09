@@ -13,6 +13,7 @@ import {
   addComment,
   addEvent,
   eventAction,
+  getEventById,
   getEvents,
 } from "./src/route_methods/event-routes";
 
@@ -40,6 +41,7 @@ app.post("/likeEvent", (req, res) => eventAction(req, res, "likes"));
 app.post("/joinEvent", (req, res) => eventAction(req, res, "participants"));
 app.post("/addComment", addComment);
 app.get("/getAllEvents", getEvents);
+app.get("/getEvent", getEventById);
 
 app.listen(PORT, () => {
   console.log("Server started");
