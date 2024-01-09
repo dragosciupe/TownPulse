@@ -115,39 +115,43 @@ export default function DetailPage() {
           </div>
         </div>
       </div>
-      <div>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div style={{ width: "50%", textAlign: "center", fontSize: "24px" }}>
-            {data.description}
-          </div>
-          <div
-            style={{
-              width: "40%",
-              height: "300px !important",
-              borderRadius: "10px",
-            }}
-          >
-            <Mapp />
-          </div>
-        </div>
-        <div className={classes.commDiv}>
-          <p className={classes.comm}>Comentarii</p>
-          <ul>
-            {data.comments.map((com) => (
-              <li key={com.message} className={classes.commUl}>
-                <h3>{com.author}</h3>
-                <p>{formatDateInCustomFormat(com.date)}</p>
-                <p>{com.message}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+      <div style={{ display: 'flex' }}>
+  
+  <div style={{ flex: 1, padding: '10px', boxSizing: 'border-box' }}>
+    <div className={classes.descriptionDiv}>{data.description}</div>
+    <div className={classes.commDiv}>
+      <p className={classes.comm}>Comentarii</p>
+      <ul>
+        {data.comments.map((com) => (
+          <li key={com.message} className={classes.commUl}>
+            <h3>{com.author}</h3>
+            <p>{formatDateInCustomFormat(com.date)}</p>
+            <p>{com.message}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  
+  <div style={{ flex: 1, padding: '10px', boxSizing: 'border-box' }}>
+    <div
+      style={{
+        width: '100%',
+        height: '300px',
+        borderRadius: '10px',
+      }}
+    >
+      <Mapp />
+    </div>
+  </div>
+</div>
+
     </div>
   );
 }
 /*
-export async function loader(params) {
+export async function loader({params}) {
     const id = params.eventID;
     const response = await fetch ('http://localhost:3000'+id)
     if (!response.ok){
