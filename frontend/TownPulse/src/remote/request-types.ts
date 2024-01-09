@@ -1,3 +1,5 @@
+import { PostComment } from "../util/Types";
+
 export type LoginAccountRequest = {
   username: string;
   password: string;
@@ -27,3 +29,7 @@ export type AddEventRequest = {
   description: string;
   coordinates: [number, number];
 };
+
+export type AddCommentRequest = {
+  eventId: string;
+} & PostComment;
