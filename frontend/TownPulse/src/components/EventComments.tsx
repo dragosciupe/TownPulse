@@ -14,6 +14,7 @@ function EventComments({ eventId, comments }: EventCommentsProps) {
   const commentText = useRef<HTMLTextAreaElement>(null);
   const triggerAction = useSubmit();
   const userData = useRouteLoaderData("root") as UserData;
+  comments = comments.sort((com1, com2) => com2.date - com1.date);
 
   function addComment() {
     const commentRequest: AddCommentRequest = {
