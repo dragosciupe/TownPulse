@@ -4,11 +4,11 @@ export const enum AccountType {
   TOWN_HALL,
 }
 
-export const enum EventType {
-  DIVERTISMENT,
-  CULTURAL,
-  PROFESIONAL,
-  COMUNITAR,
+export enum EventType {
+  DIVERTISMENT = "Divertisment",
+  CULTURAL = "Cultural",
+  PROFESIONAL = "Profesional",
+  COMUNITAR = "Comunitar",
 }
 
 export const enum UpgradeRequestStatus {
@@ -33,8 +33,8 @@ export type PostComment = {
 
 export type Event = {
   id: string;
-  type: EventType;
   creatorUsername: string;
+  eventType: EventType;
   title: string;
   duration: number;
   date: number;
@@ -48,6 +48,7 @@ export type Event = {
 
 export type AddEventRequest = {
   creatorUsername: string;
+  eventType: EventType;
   title: string;
   duration: number;
   date: number;

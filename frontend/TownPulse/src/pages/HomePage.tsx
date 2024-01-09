@@ -6,8 +6,8 @@ import { LoaderFunction, useLoaderData } from "react-router-dom";
 
 function HomePage() {
   const events = useLoaderData() as Array<EventModel>;
-  
 
+  console.log(events);
   return (
     <div className={classes.mainDiv}>
       <FilterBar />
