@@ -8,6 +8,7 @@ export interface PostComment {
 
 export interface EventModel {
   creatorUsername: string;
+  eventType: string;
   title: string;
   duration: number;
   date: number;
@@ -27,6 +28,7 @@ const PostCommentSchema = new mongoose.Schema<PostComment>({
 
 const eventSchema = new mongoose.Schema<EventModel>({
   creatorUsername: { type: String, required: true },
+  eventType: { type: String, required: true },
   title: { type: String, required: true },
   duration: { type: Number, required: true },
   date: { type: Number, required: true },

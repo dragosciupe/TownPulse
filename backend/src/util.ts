@@ -10,6 +10,13 @@ export const enum UpgradeRequestStatus {
   REJECTED,
 }
 
+export const enum EventType {
+  DIVERTISMENT = "Divertisment",
+  CULTURAL = "Cultural",
+  PROFESIONAL = "Profesional",
+  COMUNITAR = "Comunitar",
+}
+
 //Methods
 export function isRequestValid(requestObject: Object): boolean {
   const requestPropertiesTypes = Object.values(requestObject).map(

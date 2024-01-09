@@ -1,10 +1,5 @@
-import { useState, useMemo } from "react";
-
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
+import { useLoadScript } from "@react-google-maps/api";
+import usePlacesAutocomplete from "use-places-autocomplete";
 import {
   Combobox,
   ComboboxInput,
@@ -15,7 +10,7 @@ import {
 import "@reach/combobox/styles.css";
 
 export default function PlacesAutocomplete({ onSelect }) {
-  const { isLoaded } = useLoadScript({
+  useLoadScript({
     googleMapsApiKey: "AIzaSyDxQPtW3H3CMap8ojzAP7mLEcSS-yy9YnQ",
     libraries: ["places"],
   });

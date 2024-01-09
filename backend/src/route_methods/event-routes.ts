@@ -23,6 +23,7 @@ import { findUserByUsername } from "../db/models/user";
 export const addEvent = async (req: Request, res: Response) => {
   const addEventRequest: AddEventRequest = {
     creatorUsername: req.body.creatorUsername,
+    eventType: req.body.eventType,
     title: req.body.title,
     duration: req.body.duration,
     date: req.body.date,
@@ -49,6 +50,7 @@ export const addEvent = async (req: Request, res: Response) => {
 
   const eventToAdd: EventModel = {
     ...addEventRequest,
+    eventType: addEventRequest.eventType,
     city: eventPoster.city,
     likes: Array(),
     comments: Array(),
@@ -89,6 +91,7 @@ export const getEvents = async (req: Request, res: Response) => {
     return {
       id: event._id.toString(),
       creatorUsername: event.creatorUsername,
+      eventType: event.eventType,
       title: event.title,
       duration: event.duration,
       date: event.date,
@@ -102,6 +105,36 @@ export const getEvents = async (req: Request, res: Response) => {
   });
 
   res.json(eventsToSend);
+};
+
+export const getEventById = async (req: Request, res: Response) => {
+  const getEventRequest = {
+    eventId: req.query.eventId as string,
+  };
+
+  if (!isRequestValid(getEventRequest)) {
+    res
+      .status(400)
+      .send("Request object does not have all the correct properties");
+    return;
+  }
+
+  const event = (await findEventById(getEventRequest.eventId))!;
+  const eventToSend = {
+    id: event._id.toString(),
+    creatorUsername: event.creatorUsername,
+    eventType: event.eventType,
+    title: event.title,
+    duration: event.duration,
+    date: event.date,
+    city: event.city,
+    description: event.description,
+    coordinates: event.coordinates,
+    likes: event.likes,
+    comments: event.comments,
+    participants: event.participants,
+  };
+  res.json(eventToSend);
 };
 
 export const eventAction = async (

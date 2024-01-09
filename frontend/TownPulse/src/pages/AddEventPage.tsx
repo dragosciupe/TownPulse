@@ -1,7 +1,7 @@
 import { getGeocode, getLatLng } from "use-places-autocomplete";
 import PlacesAutocomplete from "../components/PlacesAutocomplete";
 import { ChangeEvent, useState } from "react";
-import { AddEventRequest } from "../util/Types";
+import { AddEventRequest, EventType } from "../util/Types";
 import { Form, json, redirect } from "react-router-dom";
 import { getUserData } from "../util/Methods";
 import classes from "../components/AddEventPage.module.css";
@@ -48,6 +48,16 @@ function AddEventPage() {
             </label>
             <input id="titlu" type="text" name="titlu" required />
           </p>
+          <div>
+            <label htmlFor="type">Tipul</label>
+            <select name="type">
+              {Object.values(EventType).map((eventType) => (
+                <option key={eventType} value={eventType}>
+                  {eventType}
+                </option>
+              ))}
+            </select>
+          </div>
           <p>
             <label className={classes.addEvLabel} htmlFor="durata">
               Durata
@@ -112,6 +122,7 @@ export async function action({ request }) {
 
   const eventData: AddEventRequest = {
     creatorUsername: userName,
+    eventType: data.get("type"),
     title: data.get("titlu"),
     duration: data.get("durata"),
     date: convertDateToTimestamp(data.get("data")),
