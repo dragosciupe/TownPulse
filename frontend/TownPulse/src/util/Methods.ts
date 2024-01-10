@@ -6,7 +6,7 @@ import {
   USER_DATA_KEY,
 } from "../util/Constants";
 
-import { UpgradeRequestStatus, type UserData } from "./Types";
+import { AccountType, UpgradeRequestStatus, type UserData } from "./Types";
 
 export function checkFieldForError(
   field: string,
@@ -94,6 +94,22 @@ export function upgradeRequestStatusToString(
 
     case UpgradeRequestStatus.REJECTED: {
       return "REJECTED";
+    }
+  }
+}
+
+export function getAccountTypeString(accountType: AccountType): string {
+  switch (accountType) {
+    case AccountType.NORMAL: {
+      return "Normal";
+    }
+
+    case AccountType.CREATOR: {
+      return "Creator";
+    }
+
+    case AccountType.TOWN_HALL: {
+      return "Primarie";
     }
   }
 }
