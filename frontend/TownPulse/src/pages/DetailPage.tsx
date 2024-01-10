@@ -4,18 +4,36 @@ import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Mapp from "../components/Map";
-import { useLoaderData } from "react-router-dom";
-import { formatDateInCustomFormat } from "../util/Methods";
+import { useLoaderData, useSubmit } from "react-router-dom";
+import { formatDateInCustomFormat, getUserData } from "../util/Methods";
 import EventComments from "../components/EventComments.tsx";
+import { EventActionRequest } from "../remote/request-types.ts";
 
 export default function DetailPage() {
   const curEvent = useLoaderData() as Event;
+  const triggerAction = useSubmit();
+
+  function handleEventInteraction(actionMode: "like" | "join" | "save") {
+    const userData = getUserData();
+    if (!userData) {
+      //To do: show the user feedback/an error,they are not logged in so they can't like/join/save an event;
+      return;
+    }
+    const eventAction: EventActionRequest = {
+      eventId: curEvent.id,
+      accountId: userData.id,
+    };
+    triggerAction(
+      { eventAction: JSON.stringify(eventAction), mode: actionMode },
+      { method: "POST" }
+    );
+  }
 
   return (
     <div className={classes.mainDiv}>
       <div
         style={{
-          backgroundImage: `url(http://localhost:3000/images/${curEvent.id})`,
+          backgroundImage: `url(http://localhost:3000/images/${curEvent.id}.jpg)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           width: "100%",
@@ -49,17 +67,41 @@ export default function DetailPage() {
             <FontAwesomeIcon icon={faClock} style={{ paddingRight: "10px" }} />
             <p>{curEvent.duration} ore</p>
           </div>
+          <div>
+            <p>{curEvent.eventType}</p>
+          </div>
         </div>
         <div className={classes.likesDiv}>
           <div className={classes.smallDetailDiv}>
-            <button style={{ width: "90px" }} className={classes.detailPageBtn}>
+            <button
+              style={{ width: "90px" }}
+              className={classes.detailPageBtn}
+              onClick={() => handleEventInteraction("like")}
+            >
               Like
             </button>
             <p>{curEvent.likes.length}</p>
           </div>
           <div className={classes.smallDetailDiv}>
-            <button className={classes.detailPageBtn}>Participanti</button>
+            <button
+              className={classes.detailPageBtn}
+              onClick={() => {
+                handleEventInteraction("join");
+              }}
+            >
+              Participa
+            </button>
             <p> {curEvent.participants.length}</p>
+          </div>
+          <div className={classes.smallDetailDiv}>
+            <button
+              className={classes.detailPageBtn}
+              onClick={() => {
+                handleEventInteraction("save");
+              }}
+            >
+              Salveaza
+            </button>
           </div>
         </div>
       </div>
@@ -86,13 +128,25 @@ export default function DetailPage() {
 
 export const detailsPageAction = async ({ request }) => {
   const data = await request.formData();
-  const addCommentRequest = data.get("commentRequest");
-  console.log(addCommentRequest);
+  const mode = data.get("mode");
+  let payloadToSend = data.get("eventAction");
+  let urlEndpoint: string;
 
-  const response = await fetch("http://localhost:3000/addComment", {
+  if (mode === "comment") {
+    payloadToSend = data.get("commentRequest");
+    urlEndpoint = "addComment";
+  } else if (mode === "like") {
+    urlEndpoint = "likeEvent";
+  } else if (mode === "join") {
+    urlEndpoint = "joinEvent";
+  } else {
+    urlEndpoint = "saveEvent";
+  }
+
+  const response = await fetch(`http://localhost:3000/${urlEndpoint}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: addCommentRequest,
+    body: payloadToSend,
   });
 
   return response;

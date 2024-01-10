@@ -18,7 +18,11 @@ import {
   updateLikesById,
   updateParticipantsById,
 } from "../db/models/events";
-import { findUserByUsername } from "../db/models/user";
+import {
+  findUserById,
+  findUserByUsername,
+  updateSavedEventsById,
+} from "../db/models/user";
 
 export const addEvent = async (req: Request, res: Response) => {
   const addEventRequest: AddEventRequest = {
@@ -140,7 +144,7 @@ export const getEventById = async (req: Request, res: Response) => {
 export const eventAction = async (
   req: Request,
   res: Response,
-  type: "likes" | "participants"
+  type: "likes" | "participants" | "save"
 ) => {
   const likeEventRequest: LikeEventRequest = {
     eventId: req.body.eventId,
@@ -166,7 +170,7 @@ export const eventAction = async (
     }
 
     await updateLikesById(likeEventRequest.eventId, likes);
-  } else {
+  } else if (type === "participants") {
     let participants = event.participants;
 
     if (participants.find((userId) => userId === likeEventRequest.accountId)) {
@@ -178,9 +182,20 @@ export const eventAction = async (
     }
 
     await updateParticipantsById(likeEventRequest.eventId, participants);
+  } else {
+    const user = (await findUserById(likeEventRequest.accountId))!;
+    let savedEvents = user.savedEvents;
+
+    if (savedEvents.find((id) => id === likeEventRequest.eventId)) {
+      savedEvents = savedEvents.filter((id) => id !== likeEventRequest.eventId);
+    } else {
+      savedEvents.push(likeEventRequest.eventId);
+    }
+
+    await updateSavedEventsById(likeEventRequest.accountId, savedEvents);
   }
 
-  res.send("Event updated successfully");
+  res.send("Event action succes");
 };
 
 export const addComment = async (req: Request, res: Response) => {

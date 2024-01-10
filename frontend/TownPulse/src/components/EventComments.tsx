@@ -25,7 +25,7 @@ function EventComments({ eventId, comments }: EventCommentsProps) {
     };
 
     triggerAction(
-      { commentRequest: JSON.stringify(commentRequest) },
+      { commentRequest: JSON.stringify(commentRequest), mode: "comment" },
       { method: "POST" }
     );
   }
@@ -37,7 +37,7 @@ function EventComments({ eventId, comments }: EventCommentsProps) {
       <button onClick={addComment}>Add comment</button>
       <ul>
         {comments.map((com) => (
-          <li key={com.message} className={classes.commUl}>
+          <li key={com.date} className={classes.commUl}>
             <h3>{com.author}</h3>
             <p>{formatDateInCustomFormat(com.date)}</p>
             <p>{com.message}</p>

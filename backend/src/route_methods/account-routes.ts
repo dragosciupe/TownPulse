@@ -48,6 +48,7 @@ export const registerUser = async (req: Request, res: Response) => {
     city: registerRequest.city,
     email: registerRequest.email,
     accountType: AccountType.NORMAL,
+    savedEvents: Array(),
   };
 
   await addNewUser(userModel);

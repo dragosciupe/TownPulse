@@ -33,3 +33,8 @@ export type AddEventRequest = {
 export type AddCommentRequest = {
   eventId: string;
 } & PostComment;
+
+export type EventActionRequest = {
+  eventId: string;
+  accountId: string;
+};
