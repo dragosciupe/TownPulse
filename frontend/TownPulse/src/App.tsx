@@ -20,7 +20,9 @@ import CreatorAccountPage, {
   creatorRequestsLoader,
 } from "./pages/CreatorAccountPage.tsx";
 import AccountDetailsPage from "./pages/AccountDetailsPage.tsx";
-import SavedEventsPage from "./pages/SavedEventsPage.tsx";
+import SavedEventsPage, {
+  savedEventsLoader,
+} from "./pages/SavedEventsPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -43,7 +45,11 @@ const router = createBrowserRouter([
         element: <RootProfileLayout />,
         children: [
           { index: true, element: <AccountDetailsPage /> },
-          { path: "savedEvents", element: <SavedEventsPage /> },
+          {
+            path: "savedEvents",
+            element: <SavedEventsPage />,
+            loader: savedEventsLoader,
+          },
           {
             path: "creatorAccountPage",
             element: <CreatorAccountPage />,
