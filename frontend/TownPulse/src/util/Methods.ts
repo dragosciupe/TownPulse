@@ -97,3 +97,30 @@ export function upgradeRequestStatusToString(
     }
   }
 }
+
+export function formatDateInCustomFormat(timestamp: number) {
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const dateObject = new Date(timestamp);
+
+  const day = dateObject.getDate();
+  const month = months[dateObject.getMonth()];
+  const year = dateObject.getFullYear();
+
+  const formattedDate = `${day}/${month}/${year}`;
+
+  return formattedDate;
+}

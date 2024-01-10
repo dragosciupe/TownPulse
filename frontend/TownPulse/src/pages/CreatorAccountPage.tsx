@@ -38,7 +38,6 @@ export async function creatorRequestAction({ request }) {
 
   if (userData.accountType === AccountType.TOWN_HALL) {
     const data = await request.formData();
-    console.log(`Form data is ${data}`);
     const mode = data.get("mode");
     const requestId = data.get("requestId");
 

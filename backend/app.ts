@@ -40,6 +40,7 @@ app.post("/addEvent", addEvent);
 app.post("/likeEvent", (req, res) => eventAction(req, res, "likes"));
 app.post("/joinEvent", (req, res) => eventAction(req, res, "participants"));
 app.post("/addComment", addComment);
+app.post("/saveEvent", (req, res) => eventAction(req, res, "save"));
 app.get("/getAllEvents", getEvents);
 app.get("/getEvent", getEventById);
 
