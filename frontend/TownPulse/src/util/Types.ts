@@ -72,6 +72,20 @@ export type Event = {
   participants: Array<string>;
 };
 
+export type HomePageEvent = {
+  id: string;
+  creatorUsername: string;
+  eventType: EventType;
+  title: string;
+  duration: number;
+  date: number;
+  city: string;
+  description: string;
+  likesCount: number;
+  commentsCount: number;
+  participantsCount: number;
+};
+
 export type AddEventRequest = {
   creatorUsername: string;
   eventType: EventType;

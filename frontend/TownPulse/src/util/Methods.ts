@@ -6,7 +6,13 @@ import {
   USER_DATA_KEY,
 } from "../util/Constants";
 
-import { AccountType, UpgradeRequestStatus, type UserData } from "./Types";
+import {
+  AccountType,
+  Event,
+  HomePageEvent,
+  UpgradeRequestStatus,
+  type UserData,
+} from "./Types";
 
 export function checkFieldForError(
   field: string,
@@ -139,4 +145,17 @@ export function formatDateInCustomFormat(timestamp: number) {
   const formattedDate = `${day}/${month}/${year}`;
 
   return formattedDate;
+}
+
+export function getHomePageEvents(events: Array<Event>): Array<HomePageEvent> {
+  return events.map((ev) => {
+    const homePageEv: HomePageEvent = {
+      ...ev,
+      likesCount: ev.likes.length,
+      commentsCount: ev.comments.length,
+      participantsCount: ev.participants.length,
+    };
+
+    return homePageEv;
+  });
 }
