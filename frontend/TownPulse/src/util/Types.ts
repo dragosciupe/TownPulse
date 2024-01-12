@@ -30,10 +30,11 @@ export enum Cities {
   PLOIESTI = "Ploiesti",
   ORADEA = "Oradea",
   DEVA = "Deva",
+  SIMERIA = "Simeria",
 }
 
 export enum OrderBy {
-  POST_DATE = "Data postarii",
+  DATE = "Data",
   LIKES = "Like-uri",
   PARTICIPANTS = "Participanti",
 }

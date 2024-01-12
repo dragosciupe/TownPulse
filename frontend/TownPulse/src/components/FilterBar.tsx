@@ -5,13 +5,14 @@ import {
   type Event,
   OrderBy,
   SortOrder,
+  HomePageEvent,
 } from "../util/Types";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { getUserData } from "../util/Methods";
 
 type FilterBarProps = {
-  initialEvents: Array<Event>;
-  updateEvents: (events: Array<Event>) => void;
+  initialEvents: Array<HomePageEvent>;
+  updateEvents: (events: Array<HomePageEvent>) => void;
 };
 
 type FilterFields = {
@@ -26,15 +27,23 @@ const eventFiltersInitialState: FilterFields = {
   search: "",
   type: "",
   city: getUserData()?.city || "",
-  orderBy: OrderBy.POST_DATE,
-  sorting: SortOrder.ASCENDING,
+  orderBy: OrderBy.DATE,
+  sorting: SortOrder.DESCENDING,
 };
+
+console.log(eventFiltersInitialState);
 
 export default function FilterBar({
   initialEvents,
   updateEvents,
 }: FilterBarProps) {
   const eventFilters = useRef(eventFiltersInitialState);
+
+  //Trigger default filtering
+  useEffect(() => {
+    const updatedEvents = filterEvents();
+    updateEvents(updatedEvents);
+  }, []);
 
   function updateFilters(field: string, value: string) {
     eventFilters.current = {
@@ -43,25 +52,40 @@ export default function FilterBar({
     };
   }
 
-  function handleFilterChange(field: string, value: string) {
-    updateFilters(field, value);
-
-    //Perform filtering on the events array
+  function filterEvents(): Array<HomePageEvent> {
     const curFields = eventFilters.current;
-    const events = initialEvents.filter(
+    let events = initialEvents.filter(
       (event) =>
         event.title.includes(curFields.search) &&
-        event.eventType.includes(curFields.type)
+        event.eventType.includes(curFields.type) &&
+        event.city.includes(curFields.city)
     );
 
     //order {sort order} by {order by}
     let fieldToSortBy: string;
 
     if (curFields.orderBy === OrderBy.LIKES) {
-      fieldToSortBy = "";
+      fieldToSortBy = "likesCount";
+    } else if (curFields.orderBy === OrderBy.PARTICIPANTS) {
+      fieldToSortBy = "participantsCount";
+    } else {
+      fieldToSortBy = "date";
     }
 
-    updateEvents(events);
+    if (curFields.sorting === SortOrder.ASCENDING) {
+      events = events.sort((e1, e2) => e1[fieldToSortBy] - e2[fieldToSortBy]);
+    } else {
+      events = events.sort((e1, e2) => e2[fieldToSortBy] - e1[fieldToSortBy]);
+    }
+
+    return events;
+  }
+
+  function handleFilterChange(field: string, value: string) {
+    updateFilters(field, value);
+
+    const updatedEvents = filterEvents();
+    updateEvents(updatedEvents);
   }
 
   return (
@@ -94,7 +118,11 @@ export default function FilterBar({
         <select
           className={classes.dropdown}
           onChange={(event) => handleFilterChange("city", event.target.value)}
+          defaultValue={getUserData()?.city || ""}
         >
+          <option key={"Toate"} value={""}>
+            Toate
+          </option>
           {Object.values(Cities).map((city) => (
             <option key={city} value={city}>
               {city}
@@ -124,6 +152,7 @@ export default function FilterBar({
           onChange={(event) =>
             handleFilterChange("sorting", event.target.value)
           }
+          defaultValue={SortOrder.DESCENDING}
         >
           {Object.values(SortOrder).map((sortOrder) => (
             <option key={sortOrder} value={sortOrder}>

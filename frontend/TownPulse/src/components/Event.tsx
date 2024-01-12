@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 import classes from "./HomePage.module.css";
-import { Event as EventModel } from "../util/Types";
-import orchestra from "../util/images/concer-orchestra.jpg";
+import { type HomePageEvent } from "../util/Types";
 
 type EventProps = {
-  event: EventModel;
+  event: HomePageEvent;
 };
 
 export default function Event({ event }: EventProps) {
@@ -29,13 +28,13 @@ export default function Event({ event }: EventProps) {
             </div>
             <h3>{event.title}</h3>
             <h2 className={classes.creator}>{event.creatorUsername}</h2>
-            <p className={classes.eventDesc} style={{fontWeight:'normal'}}>
-            {event.description}
-          </p>
-            <div style={{ padding: "20px"}} className={classes.likesDiv} >
-              <div>{event.likes.length} Likes</div>
-              <div>{event.comments.length} Comentarii</div>
-              <div>{event.participants.length} Participanti</div>
+            <p className={classes.eventDesc} style={{ fontWeight: "normal" }}>
+              {event.description}
+            </p>
+            <div style={{ padding: "20px" }} className={classes.likesDiv}>
+              <div>{event.likesCount} Likes</div>
+              <div>{event.commentsCount} Comentarii</div>
+              <div>{event.participantsCount} Participanti</div>
             </div>
           </div>
         </Link>
