@@ -1,15 +1,17 @@
 import Event from "../components/Event";
 import classes from "../components/HomePage.module.css";
 import FilterBar from "../components/FilterBar";
-import { Event as EventModel } from "../util/Types";
+import { Event as EventModel, HomePageEvent } from "../util/Types";
 import { LoaderFunction, useLoaderData } from "react-router-dom";
 import { useState } from "react";
+import { getHomePageEvents } from "../util/Methods";
 
 function HomePage() {
-  const loadedEvents = useLoaderData() as Array<EventModel>;
+  const initialEvents = useLoaderData() as Array<EventModel>;
+  const loadedEvents = getHomePageEvents(initialEvents);
   const [filteredEvents, setFilteredEvents] = useState(loadedEvents);
 
-  function handleEventFiltering(events: Array<EventModel>) {
+  function handleEventFiltering(events: Array<HomePageEvent>) {
     setFilteredEvents(events);
   }
 
