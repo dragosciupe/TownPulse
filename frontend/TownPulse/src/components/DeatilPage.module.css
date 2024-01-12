@@ -36,6 +36,10 @@
     display: flex;
     padding-bottom: 5px;
 }
+.typeP{
+    margin-left: 20px;
+    font-weight: bolder;
+}
 .detailPageBtn{
     background-color: #9191c7;
     color: white;
@@ -56,9 +60,15 @@
 .mapDiv{
     display: flex;
     margin: 50px;
+    
 }
 .commDiv{
     margin-left: 50px;
+    margin-top: 50px;
+    margin-right: 40px;
+    border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+    padding-left: 10px;
 }
 .comm{
     font-weight: bold;
@@ -73,4 +83,29 @@ padding: 7px;
 margin: 10px;
 border-radius: 7px;
 max-width: 400px;
+}
+
+.detailDesc{
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+    margin-right: 40px;
+    margin-left: 50px;
+    border-radius: 7px;
+    padding: 10px;
+    font-size: 20px;
+    
+}
+.addCommBtn{
+    border-radius: 50px;
+    margin-left: 20px;
+    
+    
+    height: 40px;
+    width: 40px;
+    background-color: #78cff8;
+    border-color: #ffffff;
+}
+.textAreaDetail{
+    width: 550px;
+    border-radius: 7px;
+    
 }

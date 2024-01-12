@@ -12,11 +12,11 @@ import { EventActionRequest } from "../remote/request-types.ts";
 export default function DetailPage() {
   const curEvent = useLoaderData() as Event;
   const triggerAction = useSubmit();
-
+  let eventFormat:string;
   function handleEventInteraction(actionMode: "like" | "join" | "save") {
     const userData = getUserData();
     if (!userData) {
-      //To do: show the user feedback/an error,they are not logged in so they can't like/join/save an event;
+     
       return;
     }
     const eventAction: EventActionRequest = {
@@ -27,6 +27,11 @@ export default function DetailPage() {
       { eventAction: JSON.stringify(eventAction), mode: actionMode },
       { method: "POST" }
     );
+  }
+  if (curEvent.eventType === "Divertisment") {
+    eventFormat = "Eveniment de divertisment";
+  } else {
+    eventFormat = `Eveniment ${curEvent.eventType}`;
   }
 
   return (
@@ -68,7 +73,7 @@ export default function DetailPage() {
             <p>{curEvent.duration} ore</p>
           </div>
           <div>
-            <p>{curEvent.eventType}</p>
+            <p className={classes.typeP}>{eventFormat}</p>
           </div>
         </div>
         <div className={classes.likesDiv}>
@@ -105,23 +110,25 @@ export default function DetailPage() {
           </div>
         </div>
       </div>
-      <div>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div style={{ width: "50%", textAlign: "center", fontSize: "24px" }}>
-            {curEvent.description}
-          </div>
+      <div style={{ display: "flex", gap: "20px" }}>
+        <div style={{ flex: 1 }}>
+          <div className={classes.detailDesc}>{curEvent.description}</div>
+
+          <EventComments eventId={curEvent.id} comments={curEvent.comments} />
+        </div>
+        <div style={{ flex: 1 }}>
           <div
             style={{
-              width: "40%",
-              height: "300px !important",
+              width: "100%",
+              
               borderRadius: "10px",
+              overflow: "hidden",
             }}
           >
             <Mapp lat={curEvent.coordinates[0]} lng={curEvent.coordinates[1]} />
           </div>
         </div>
       </div>
-      <EventComments eventId={curEvent.id} comments={curEvent.comments} />
     </div>
   );
 }

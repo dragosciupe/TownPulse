@@ -26,6 +26,19 @@ function Request({ requestItem }: RequestProps) {
   const month = dateConstructor.getMonth() + 1;
   const year = dateConstructor.getFullYear();
   const formattedDate = `${day}/${month}/${year}`;
+  let stiluri:string= 'default';
+
+  if(upgradeRequestStatusToString(requestItem.status)==='ACCEPTED'){
+    stiluri='green';
+
+  }
+    if(upgradeRequestStatusToString(requestItem.status)==='PENDING'){
+      stiluri='yellow';
+    }
+    if(upgradeRequestStatusToString(requestItem.status)==='REJECTED'){
+      stiluri='red';
+    }
+ 
 
   if (userData.accountType === AccountType.TOWN_HALL) {
     return (
@@ -71,8 +84,8 @@ function Request({ requestItem }: RequestProps) {
         </div>
 
         <div>
-          <label>Status:</label>
-          <label>{upgradeRequestStatusToString(requestItem.status)}</label>
+          <label style={{paddingRight:'5px'}}>Status:</label>
+          <label style={{color:stiluri}}>{upgradeRequestStatusToString(requestItem.status)}</label>
         </div>
       </div>
     );
