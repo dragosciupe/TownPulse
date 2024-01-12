@@ -111,6 +111,48 @@ export const getEvents = async (req: Request, res: Response) => {
   res.json(eventsToSend);
 };
 
+export const getSavedEvents = async (req: Request, res: Response) => {
+  const getSavedEventsRequest = {
+    accountId: req.query.accountId as string,
+  };
+
+  if (!isRequestValid(getSavedEventsRequest)) {
+    res
+      .status(400)
+      .send("Request object does not have all the correct properties");
+    return;
+  }
+
+  type EventToSend = {
+    id: string;
+  } & EventModel;
+
+  const user = (await findUserById(getSavedEventsRequest.accountId))!;
+  const allEvents: Array<EventToSend> = Array();
+
+  for (let i = 0; i < user.savedEvents.length; i++) {
+    const event = (await findEventById(user.savedEvents[i]))!;
+    const eventToSend: EventToSend = {
+      id: event._id.toString(),
+      creatorUsername: event.creatorUsername,
+      eventType: event.eventType,
+      title: event.title,
+      duration: event.duration,
+      date: event.date,
+      city: event.city,
+      description: event.description,
+      coordinates: event.coordinates,
+      likes: event.likes,
+      comments: event.comments,
+      participants: event.participants,
+    };
+
+    allEvents.push(eventToSend);
+  }
+
+  res.json(allEvents);
+};
+
 export const getEventById = async (req: Request, res: Response) => {
   const getEventRequest = {
     eventId: req.query.eventId as string,

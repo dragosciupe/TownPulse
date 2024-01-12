@@ -1,9 +1,36 @@
+import { useLoaderData, LoaderFunction } from "react-router-dom";
+import { type Event as EventModel } from "../util/Types";
+import Event from "../components/Event.tsx";
+import classes from "../components/HomePage.module.css";
+import { getUserData } from "../util/Methods";
+
 function SavedEventsPage() {
+  const events = useLoaderData() as Array<EventModel>;
+
   return (
-    <>
-      <h1 style={{ textAlign: "center" }}>Welcome to your saved events</h1>
-    </>
+    <div className={classes.mainDiv}>
+      <ul id={classes.events}>
+        {events.map((ev) => (
+          <Event key={ev.id} event={ev} />
+        ))}
+      </ul>
+    </div>
   );
 }
 
 export default SavedEventsPage;
+
+export const savedEventsLoader: LoaderFunction<
+  Array<EventModel>
+> = async () => {
+  const userData = getUserData()!;
+  const paramsToSend = new URLSearchParams({
+    accountId: userData.id,
+  }).toString();
+
+  const response = await fetch(
+    `http://localhost:3000/getSavedEvents?${paramsToSend}`
+  );
+
+  return response;
+};

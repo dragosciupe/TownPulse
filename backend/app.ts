@@ -15,6 +15,7 @@ import {
   eventAction,
   getEventById,
   getEvents,
+  getSavedEvents,
 } from "./src/route_methods/event-routes";
 
 import { PORT, MONGO_URL } from "./src/util";
@@ -43,6 +44,7 @@ app.post("/addComment", addComment);
 app.post("/saveEvent", (req, res) => eventAction(req, res, "save"));
 app.get("/getAllEvents", getEvents);
 app.get("/getEvent", getEventById);
+app.get("/getSavedEvents", getSavedEvents);
 
 app.listen(PORT, () => {
   console.log("Server started");

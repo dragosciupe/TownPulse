@@ -48,16 +48,17 @@ function AddEventPage() {
             </label>
             <input id="titlu" type="text" name="titlu" required />
           </p>
-          <div>
-            <label htmlFor="type">Tipul</label>
-            <select name="type">
+          <p>
+            <label className={classes.addEvLabel} htmlFor="type">Tipul</label>
+            
+            <select name="type" className={classes.addEventSelect}>
               {Object.values(EventType).map((eventType) => (
-                <option key={eventType} value={eventType}>
+                <option key={eventType} value={eventType} className={classes.optionStyle}>
                   {eventType}
                 </option>
               ))}
             </select>
-          </div>
+          </p>
           <p>
             <label className={classes.addEvLabel} htmlFor="durata">
               Durata
