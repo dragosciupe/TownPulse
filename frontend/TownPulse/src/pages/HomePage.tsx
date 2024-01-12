@@ -3,16 +3,24 @@ import classes from "../components/HomePage.module.css";
 import FilterBar from "../components/FilterBar";
 import { Event as EventModel } from "../util/Types";
 import { LoaderFunction, useLoaderData } from "react-router-dom";
+import { useState } from "react";
 
 function HomePage() {
-  const events = useLoaderData() as Array<EventModel>;
+  const loadedEvents = useLoaderData() as Array<EventModel>;
+  const [filteredEvents, setFilteredEvents] = useState(loadedEvents);
 
-  console.log(events);
+  function handleEventFiltering(events: Array<EventModel>) {
+    setFilteredEvents(events);
+  }
+
   return (
     <div className={classes.mainDiv}>
-      <FilterBar />
+      <FilterBar
+        initialEvents={loadedEvents}
+        updateEvents={handleEventFiltering}
+      />
       <ul id={classes.events}>
-        {events.map((ev) => (
+        {filteredEvents.map((ev) => (
           <Event key={ev.id} event={ev} />
         ))}
       </ul>

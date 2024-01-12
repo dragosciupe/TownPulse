@@ -17,6 +17,32 @@ export const enum UpgradeRequestStatus {
   REJECTED,
 }
 
+export enum Cities {
+  BUCHAREST = "Bucuresti",
+  CLUJ = "Cluj-Napoca",
+  TIMISOARA = "Timisoara",
+  IASI = "Iasi",
+  CONSTANTA = "Constanta",
+  BRASOV = "Brasov",
+  GALATI = "Galati",
+  CRAIOVA = "Craiova",
+  BAIA_MARE = "Baia-Mare",
+  PLOIESTI = "Ploiesti",
+  ORADEA = "Oradea",
+  DEVA = "Deva",
+}
+
+export enum OrderBy {
+  POST_DATE = "Data postarii",
+  LIKES = "Like-uri",
+  PARTICIPANTS = "Participanti",
+}
+
+export enum SortOrder {
+  ASCENDING = "Crescator",
+  DESCENDING = "Descrescator",
+}
+
 export type UserData = {
   id: string;
   username: string;
