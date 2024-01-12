@@ -2,10 +2,11 @@ import { useLoaderData, LoaderFunction } from "react-router-dom";
 import { type Event as EventModel } from "../util/Types";
 import Event from "../components/Event.tsx";
 import classes from "../components/HomePage.module.css";
-import { getUserData } from "../util/Methods";
+import { getHomePageEvents, getUserData } from "../util/Methods";
 
 function SavedEventsPage() {
-  const events = useLoaderData() as Array<EventModel>;
+  const initialEvents = useLoaderData() as Array<EventModel>;
+  const events = getHomePageEvents(initialEvents);
 
   return (
     <div className={classes.mainDiv}>
