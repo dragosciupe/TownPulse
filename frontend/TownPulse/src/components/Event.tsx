@@ -29,13 +29,13 @@ export default function Event({ event }: EventProps) {
             </div>
             <h3>{event.title}</h3>
             <h2 className={classes.creator}>{event.creatorUsername}</h2>
-            <p style={{ fontWeight: "normal", paddingLeft: "13px" }}>
-              {event.description}
-            </p>
-            <div style={{ padding: "20px" }} className={classes.bigP}>
-              <p>{event.likes.length} Likes</p>
-              <p>{event.comments.length} Comentarii</p>
-              <p>{event.participants.length} Participanti</p>
+            <p className={classes.eventDesc} style={{fontWeight:'normal'}}>
+            {event.description}
+          </p>
+            <div style={{ padding: "20px"}} className={classes.likesDiv} >
+              <div>{event.likes.length} Likes</div>
+              <div>{event.comments.length} Comentarii</div>
+              <div>{event.participants.length} Participanti</div>
             </div>
           </div>
         </Link>

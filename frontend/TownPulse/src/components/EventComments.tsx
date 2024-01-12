@@ -4,6 +4,8 @@ import { formatDateInCustomFormat } from "../util/Methods";
 import { useRef } from "react";
 import { useSubmit, useRouteLoaderData } from "react-router-dom";
 import { AddCommentRequest } from "../remote/request-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 type EventCommentsProps = {
   eventId: string;
@@ -33,8 +35,7 @@ function EventComments({ eventId, comments }: EventCommentsProps) {
   return (
     <div className={classes.commDiv}>
       <p className={classes.comm}>Comentarii</p>
-      <textarea ref={commentText} />
-      <button onClick={addComment}>Add comment</button>
+      
       <ul>
         {comments.map((com) => (
           <li key={com.date} className={classes.commUl}>
@@ -44,6 +45,10 @@ function EventComments({ eventId, comments }: EventCommentsProps) {
           </li>
         ))}
       </ul>
+      <div style={{display:'flex',paddingBottom:'20px'}}>
+      <textarea className={classes.textAreaDetail} ref={commentText} />
+      <button className={classes.addCommBtn} onClick={addComment}><FontAwesomeIcon icon={faPlus} /></button>
+      </div>
     </div>
   );
 }
