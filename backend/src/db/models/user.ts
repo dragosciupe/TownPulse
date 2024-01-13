@@ -8,6 +8,7 @@ export interface UserModel {
   email: string;
   accountType: AccountType;
   savedEvents: Array<string>;
+  hasProfilePicture: boolean;
 }
 
 const userSchema = new mongoose.Schema<UserModel>({
@@ -17,6 +18,7 @@ const userSchema = new mongoose.Schema<UserModel>({
   email: { type: String, required: true },
   accountType: { type: Number, required: true },
   savedEvents: { type: [String], required: true },
+  hasProfilePicture: { type: Boolean, required: true },
 });
 
 export const User = mongoose.model<UserModel>("user", userSchema);
@@ -42,3 +44,6 @@ export const findUserById = (id: string) => User.findById(id);
 
 export const updateSavedEventsById = (id: string, savedEvents: Array<string>) =>
   User.findByIdAndUpdate(id, { savedEvents: savedEvents });
+
+export const updateProfilePictureStatus = (id: string, status: boolean) =>
+  User.findByIdAndUpdate(id, { hasProfilePicture: status });

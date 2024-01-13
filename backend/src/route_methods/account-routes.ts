@@ -2,7 +2,9 @@ import { Request, Response } from "express";
 import {
   type RegisterAccountRequest,
   type LoginAccountRequest,
+  ProfilePictureRequest,
 } from "./request-types";
+import fs from "fs";
 
 import { type UserData } from "./response-types";
 
@@ -11,6 +13,7 @@ import {
   addNewUser,
   findUserByUsername,
   findUserByEmail,
+  updateProfilePictureStatus,
 } from "../db/models/user";
 
 import { isRequestValid, AccountType } from "../util";
@@ -49,6 +52,7 @@ export const registerUser = async (req: Request, res: Response) => {
     email: registerRequest.email,
     accountType: AccountType.NORMAL,
     savedEvents: Array(),
+    hasProfilePicture: false,
   };
 
   await addNewUser(userModel);
@@ -85,6 +89,41 @@ export const loginUser = async (req: Request, res: Response) => {
     city: currentUser.city,
     email: currentUser.email,
     accountType: currentUser.accountType,
+    hasProfilePicture: false,
   };
   res.json(userDataResponse);
+};
+
+export const changeProfilePicture = async (req: Request, res: Response) => {
+  const profilePictureRequest: ProfilePictureRequest = {
+    accountId: req.body.accountId,
+    base64Photo: req.body.base64Photo,
+  };
+
+  if (!isRequestValid(profilePictureRequest)) {
+    res
+      .status(400)
+      .send("Request object does not have all the correct properties");
+    return;
+  }
+
+  const base64ProfileImage = profilePictureRequest.base64Photo;
+
+  const dataWithoutPrefix = base64ProfileImage.replace(
+    /^data:image\/\w+;base64,/,
+    ""
+  );
+  const buffer = Buffer.from(dataWithoutPrefix, "base64");
+  const filePath = `public/profile/${profilePictureRequest.accountId}.jpg`;
+
+  fs.writeFile(filePath, buffer, (err) => {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log("Image saved successfully!");
+    }
+  });
+
+  await updateProfilePictureStatus(profilePictureRequest.accountId, true);
+  res.send("Profile picture changed succesfully");
 };

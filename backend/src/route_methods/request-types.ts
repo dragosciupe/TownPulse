@@ -41,3 +41,8 @@ export type LikeEventRequest = {
 export type AddCommentRequest = {
   eventId: string;
 } & PostComment;
+
+export type ProfilePictureRequest = {
+  accountId: string;
+  base64Photo: string;
+};

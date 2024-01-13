@@ -38,3 +38,8 @@ export type EventActionRequest = {
   eventId: string;
   accountId: string;
 };
+
+export type ProfilePictureRequest = {
+  accountId: string;
+  base64Photo: string;
+};

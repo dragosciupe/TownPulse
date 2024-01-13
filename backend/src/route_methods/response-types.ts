@@ -7,6 +7,7 @@ export type UserData = {
   city: string;
   email: string;
   accountType: AccountType;
+  hasProfilePicture: boolean;
 };
 
 export type UpgradeRequest = {

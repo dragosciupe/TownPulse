@@ -3,7 +3,11 @@ import cors from "cors";
 import mongoose from "mongoose";
 import path from "path";
 
-import { registerUser, loginUser } from "./src/route_methods/account-routes";
+import {
+  registerUser,
+  loginUser,
+  changeProfilePicture,
+} from "./src/route_methods/account-routes";
 import {
   upgradeAccountRequest,
   accountUpgradeRequestAction,
@@ -26,9 +30,11 @@ app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 app.use(express.static("public"));
 app.use("/images", express.static(path.join(__dirname, "public", "images")));
+app.use("/profile", express.static(path.join(__dirname, "public", "profile")));
 
 app.post("/registerAccount", registerUser);
 app.post("/loginAccount", loginUser);
+app.post("/changeProfilePicture", changeProfilePicture);
 app.post("/upgradeAccount", upgradeAccountRequest);
 app.post("/acceptAccountUpgrade", (req, res) =>
   accountUpgradeRequestAction(req, res, "accept")
