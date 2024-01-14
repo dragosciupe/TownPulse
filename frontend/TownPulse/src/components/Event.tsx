@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import classes from "./HomePage.module.css";
 import { type HomePageEvent } from "../util/Types";
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 type EventProps = {
   event: HomePageEvent;
 };
@@ -38,19 +38,31 @@ export default function Event({ event }: EventProps) {
           />
           <div>
             <div className={classes.bigP}>
-             <div className={classes.homePageIcons}>
-             <CalendarMonthIcon/>
-               <p style={{marginLeft:'0px'}}>{formattedDate}</p>
-             </div>
-             <div className={classes.homePageIcons}>
-              <LocationOnIcon/>
-              <p style={{marginLeft:'0px'}}>{event.city}</p>
+              <div className={classes.homePageIcons}>
+                <CalendarMonthIcon />
+                <p
+                  style={{
+                    marginLeft: "0px",
+                    fontSize: "13px",
+                    color: "#00003B",
+                  }}
+                >
+                  {formattedDate}
+                </p>
               </div>
               <div className={classes.homePageIcons}>
-                <AccessTimeIcon/>
-              <p style={{marginLeft:'0px'}}>18:30</p>
+                <LocationOnIcon />
+                <p style={{ marginLeft: "0px", fontSize: "13px" }}>
+                  {event.city}
+                </p>
+              </div>
+              <div className={classes.homePageIcons}>
+                <AccessTimeIcon />
+                <p style={{ marginLeft: "0px", fontSize: "13px" }}>18:30</p>
               </div>
             </div>
+
+            <hr></hr>
             <h3>{event.title}</h3>
             <h2 className={classes.creator}>{event.creatorUsername}</h2>
             <p className={classes.eventDesc} style={{ fontWeight: "normal" }}>
