@@ -89,13 +89,13 @@ export default function FilterBar({
 
   return (
     <div className={classes.mainDivFilterBar}>
-      <p>
-        <label className={classes.labelItem}>Cautare</label>
-        <input
+      <div>
+        <label style={{marginLeft:'10px'}} className={classes.labelItem}>Cautare</label>
+        <input style={{width:'100%'}}
           className={classes.inputItem}
           onChange={(event) => handleFilterChange("search", event.target.value)}
         />
-      </p>
+      </div>
       <p>
         <label className={classes.labelItem}>Tip</label>
         <select

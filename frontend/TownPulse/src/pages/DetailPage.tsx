@@ -4,19 +4,25 @@ import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Mapp from "../components/Map";
+import { useState } from "react";
 import { useLoaderData, useSubmit } from "react-router-dom";
 import { formatDateInCustomFormat, getUserData } from "../util/Methods";
 import EventComments from "../components/EventComments.tsx";
 import { EventActionRequest } from "../remote/request-types.ts";
-
+import IconButton from "@mui/material/IconButton";
+import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 export default function DetailPage() {
+  const [isActiveLike, setIsActiveLike] = useState(false);
+  const [isActiveParticip, setIsActiveparticip] = useState(false);
+  const [isActiveSave, setIsActiveSave] = useState(false);
   const curEvent = useLoaderData() as Event;
   const triggerAction = useSubmit();
-  let eventFormat:string;
+  let eventFormat: string;
   function handleEventInteraction(actionMode: "like" | "join" | "save") {
     const userData = getUserData();
     if (!userData) {
-     
       return;
     }
     const eventAction: EventActionRequest = {
@@ -33,6 +39,18 @@ export default function DetailPage() {
   } else {
     eventFormat = `Eveniment ${curEvent.eventType}`;
   }
+  const handleLikeClick = () => {
+    setIsActiveLike(!isActiveLike);
+    handleEventInteraction("like");
+  };
+  const handleParticipClick = () => {
+    setIsActiveparticip(!isActiveParticip);
+    handleEventInteraction("join");
+  };
+  const handleSaveClick = () => {
+    setIsActiveSave(!isActiveSave);
+    handleEventInteraction("save");
+  };
 
   return (
     <div className={classes.mainDiv}>
@@ -78,35 +96,39 @@ export default function DetailPage() {
         </div>
         <div className={classes.likesDiv}>
           <div className={classes.smallDetailDiv}>
-            <button
-              style={{ width: "90px" }}
-              className={classes.detailPageBtn}
-              onClick={() => handleEventInteraction("like")}
-            >
-              Like
-            </button>
+            <IconButton>
+              <ThumbUpAltIcon
+                style={{ width: "90px" }}
+                className={`${classes.detailPageBtn} ${
+                  isActiveLike ? classes.active : ""
+                }`}
+                onClick={handleLikeClick}
+              ></ThumbUpAltIcon>
+            </IconButton>
             <p>{curEvent.likes.length}</p>
           </div>
           <div className={classes.smallDetailDiv}>
-            <button
-              className={classes.detailPageBtn}
-              onClick={() => {
-                handleEventInteraction("join");
-              }}
-            >
-              Participa
-            </button>
+            <IconButton>
+              <AddCircleOutlineIcon
+                className={`${classes.detailPageBtn} ${
+                  isActiveParticip ? classes.active : ""
+                }`}
+                style={{ width: "90px" }}
+                onClick={handleParticipClick}
+              />
+            </IconButton>
             <p> {curEvent.participants.length}</p>
           </div>
           <div className={classes.smallDetailDiv}>
-            <button
-              className={classes.detailPageBtn}
-              onClick={() => {
-                handleEventInteraction("save");
-              }}
-            >
-              Salveaza
-            </button>
+            <IconButton>
+              <BookmarkIcon
+                className={`${classes.detailPageBtn} ${
+                  isActiveSave ? classes.active : ""
+                }`}
+                style={{ width: "110px" }}
+                onClick={handleSaveClick}
+              />
+            </IconButton>
           </div>
         </div>
       </div>
@@ -120,7 +142,7 @@ export default function DetailPage() {
           <div
             style={{
               width: "100%",
-              
+
               borderRadius: "10px",
               overflow: "hidden",
             }}

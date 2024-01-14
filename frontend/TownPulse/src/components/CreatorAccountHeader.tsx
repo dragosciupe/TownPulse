@@ -30,7 +30,7 @@ function CreatorAccountHeader({
   } else {
     mainContent = (
       <div className={classes.container}>
-        <h3>
+        <h3 >
           Puteti aplica pentru un cont de creator pentru orasul {city}
           <br />
           Ca si creator aveti dreptul de a posta eventimente pentru locatarii
@@ -45,7 +45,7 @@ function CreatorAccountHeader({
             <button className={classes.aplicabuton}>Aplica</button>
           </Form>
         ) : (
-          <button disabled>Esti deja creator</button>
+          <button style={{height:'40px',marginLeft:'700px'}}className={classes.aplicabuton} disabled>Esti deja creator</button>
         )}
       </div>
     );

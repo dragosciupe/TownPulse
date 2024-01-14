@@ -4,7 +4,7 @@
 }
 
 .container {
-    max-width: 100%; /* Ensure the container takes up the full width of its parent */
+    max-width: 100%; 
   
 }
 
@@ -31,4 +31,7 @@
     width: 100px;
     font-family: 'Montserrat', sans-serif;
    
+ }
+ .dejaCreator{
+
  }
