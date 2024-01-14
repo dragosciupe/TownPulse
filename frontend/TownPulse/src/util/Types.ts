@@ -61,6 +61,7 @@ export type PostComment = {
 export type Event = {
   id: string;
   creatorUsername: string;
+  creatorId: string;
   eventType: EventType;
   title: string;
   duration: number;
@@ -76,6 +77,7 @@ export type Event = {
 export type HomePageEvent = {
   id: string;
   creatorUsername: string;
+  creatorId: string;
   eventType: EventType;
   title: string;
   duration: number;

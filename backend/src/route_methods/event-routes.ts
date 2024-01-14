@@ -87,14 +87,20 @@ export const addEvent = async (req: Request, res: Response) => {
 export const getEvents = async (req: Request, res: Response) => {
   type EventToSend = {
     id: string;
+    creatorId: string;
   } & EventModel;
 
   const allEvents = await getAllEvents();
+  const eventsToSend: Array<EventToSend> = Array();
 
-  const eventsToSend: Array<EventToSend> = allEvents.map((event) => {
-    return {
+  for (let i = 0; i < allEvents.length; i++) {
+    const event = allEvents[i];
+    const curEventCreator = (await findUserByUsername(event.creatorUsername))!;
+
+    const eventToAdd: EventToSend = {
       id: event._id.toString(),
       creatorUsername: event.creatorUsername,
+      creatorId: curEventCreator._id.toString(),
       eventType: event.eventType,
       title: event.title,
       duration: event.duration,
@@ -106,7 +112,9 @@ export const getEvents = async (req: Request, res: Response) => {
       comments: event.comments,
       participants: event.participants,
     };
-  });
+
+    eventsToSend.push(eventToAdd);
+  }
 
   res.json(eventsToSend);
 };
