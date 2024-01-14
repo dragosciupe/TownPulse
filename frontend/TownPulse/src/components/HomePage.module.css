@@ -29,7 +29,7 @@
 
   }
   .creator{
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: rgb(91, 90, 90);
     margin-left: 25px;
   }
@@ -42,11 +42,23 @@
 .bigP {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   margin-top: 10px; 
   font-size: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
   
   
+}
+.verticalLine {
+  border-left: 1px solid #000;
+  height: 100%;
+  margin: 0 10px; 
+  
+}
+.homePageIcons{
+  display: flex;
+  align-items: center;
 }
 .likesDiv{
   display: flex;
@@ -64,10 +76,9 @@
     font-size: 1rem;
     font-weight: bold;
     text-align: left;
-    padding-left: 30px;
-    margin: 0.75rem 0;
     color: rgb(0, 0, 0);
-    
+    margin-left: 25px;
+    margin-bottom: -5px;
   }
   
   .event p {

@@ -34,7 +34,7 @@
 }
 .smallDetailDiv{
     display: flex;
-    padding-bottom: 5px;
+    align-items:center ;
 }
 .typeP{
     margin-left: 20px;
@@ -52,10 +52,9 @@
  width: 160px;
 }
 .detailPageBtn:hover,
-.detailPageBtn:active{
-    background-color: white;
-    color:black;
-
+.detailPageBtn.active {
+  background-color: white;
+  color: black;
 }
 .mapDiv{
     display: flex;
@@ -75,6 +74,10 @@
     font-size: 2rem;
 
 }
+.scrollableDiv {
+    max-height: 400px; 
+    overflow-y: auto; 
+  }
 .commUl{
 box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
 list-style: none;
@@ -97,8 +100,6 @@ max-width: 400px;
 .addCommBtn{
     border-radius: 50px;
     margin-left: 20px;
-    
-    
     height: 40px;
     width: 40px;
     background-color: #78cff8;

@@ -35,22 +35,28 @@ function EventComments({ eventId, comments }: EventCommentsProps) {
   return (
     <div className={classes.commDiv}>
       <p className={classes.comm}>Comentarii</p>
-      
-      <ul>
-        {comments.map((com) => (
-          <li key={com.date} className={classes.commUl}>
-            <h3>{com.author}</h3>
-            <p>{formatDateInCustomFormat(com.date)}</p>
-            <p>{com.message}</p>
-          </li>
-        ))}
-      </ul>
-      <div style={{display:'flex',paddingBottom:'20px'}}>
-      <textarea className={classes.textAreaDetail} ref={commentText} />
-      <button className={classes.addCommBtn} onClick={addComment}><FontAwesomeIcon icon={faPlus} /></button>
+  
+      <div className={classes.scrollableDiv}>
+        <ul>
+          {comments.map((com) => (
+            <li key={com.date} className={classes.commUl}>
+              <h3>{com.author}</h3>
+              <p>{formatDateInCustomFormat(com.date)}</p>
+              <p>{com.message}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+  
+      <div style={{ display: 'flex', paddingBottom: '20px' }}>
+        <textarea className={classes.textAreaDetail} ref={commentText} />
+        <button className={classes.addCommBtn} onClick={addComment}>
+          <FontAwesomeIcon icon={faPlus} />
+        </button>
       </div>
     </div>
   );
+  
 }
 
 export default EventComments;

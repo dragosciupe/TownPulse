@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import classes from "./HomePage.module.css";
 import { type HomePageEvent } from "../util/Types";
-
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 type EventProps = {
   event: HomePageEvent;
 };
@@ -9,9 +11,22 @@ type EventProps = {
 export default function Event({ event }: EventProps) {
   const dateConstructor = new Date(event.date);
   const day = dateConstructor.getDate();
-  const month = dateConstructor.getMonth() + 1;
-  const year = dateConstructor.getFullYear();
-  const formattedDate = `${day}/${month}/${year}`;
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const month = monthNames[dateConstructor.getMonth()];
+  const formattedDate = `${day} ${month}`;
 
   return (
     <li className={classes.event}>
@@ -23,8 +38,18 @@ export default function Event({ event }: EventProps) {
           />
           <div>
             <div className={classes.bigP}>
-              <p>{formattedDate}</p>
-              <p>{event.city}</p>
+             <div className={classes.homePageIcons}>
+             <CalendarMonthIcon/>
+               <p style={{marginLeft:'0px'}}>{formattedDate}</p>
+             </div>
+             <div className={classes.homePageIcons}>
+              <LocationOnIcon/>
+              <p style={{marginLeft:'0px'}}>{event.city}</p>
+              </div>
+              <div className={classes.homePageIcons}>
+                <AccessTimeIcon/>
+              <p style={{marginLeft:'0px'}}>18:30</p>
+              </div>
             </div>
             <h3>{event.title}</h3>
             <h2 className={classes.creator}>{event.creatorUsername}</h2>

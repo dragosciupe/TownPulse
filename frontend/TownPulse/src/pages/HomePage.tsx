@@ -20,6 +20,7 @@ function HomePage() {
       <FilterBar
         initialEvents={loadedEvents}
         updateEvents={handleEventFiltering}
+        
       />
       <ul id={classes.events}>
         {filteredEvents.map((ev) => (
