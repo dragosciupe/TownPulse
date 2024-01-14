@@ -9,8 +9,7 @@ function isPageActive(isActive: boolean): string | undefined {
 
 function MainNavigation() {
   const userData = useRouteLoaderData("root") as UserData;
-  const ruote = useMatch('/:eventid')
-  console.log(ruote);
+  
   return (
     <header className={classes.header}>
       <div>

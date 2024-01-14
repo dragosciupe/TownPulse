@@ -39,6 +39,11 @@ export default function DetailPage() {
   } else {
     eventFormat = `Eveniment ${curEvent.eventType}`;
   }
+  const userData = getUserData()!;
+  let isLiked: string | undefined = curEvent.likes.find((accID)=>accID===userData.id)
+  console.log(isLiked);
+  
+  isLiked
   const handleLikeClick = () => {
     setIsActiveLike(!isActiveLike);
     handleEventInteraction("like");
@@ -100,7 +105,7 @@ export default function DetailPage() {
               <ThumbUpAltIcon
                 style={{ width: "90px" }}
                 className={`${classes.detailPageBtn} ${
-                  isActiveLike ? classes.active : ""
+                  isLiked ? classes.active : ""
                 }`}
                 onClick={handleLikeClick}
               ></ThumbUpAltIcon>

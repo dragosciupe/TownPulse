@@ -4,6 +4,7 @@ import { type HomePageEvent } from "../util/Types";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import noProfilePicture from "../util/images/no_profile_picture.jpg";
 type EventProps = {
   event: HomePageEvent;
 };
@@ -63,8 +64,18 @@ export default function Event({ event }: EventProps) {
             </div>
 
             <hr></hr>
+            <div className={classes.divProfileImg}>
+              <div style={{ height: "25px"}}>
+                <img
+                  src={noProfilePicture}
+                  alt="nu e poza"
+                  style={{ height: "100%",borderRadius:'50px'  }}
+                  
+                />
+              </div>
+              <h2 className={classes.creator}>{event.creatorUsername}</h2>
+            </div>
             <h3>{event.title}</h3>
-            <h2 className={classes.creator}>{event.creatorUsername}</h2>
             <p className={classes.eventDesc} style={{ fontWeight: "normal" }}>
               {event.description}
             </p>
