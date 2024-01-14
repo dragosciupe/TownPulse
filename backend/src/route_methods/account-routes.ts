@@ -89,7 +89,6 @@ export const loginUser = async (req: Request, res: Response) => {
     city: currentUser.city,
     email: currentUser.email,
     accountType: currentUser.accountType,
-    hasProfilePicture: false,
   };
   res.json(userDataResponse);
 };
