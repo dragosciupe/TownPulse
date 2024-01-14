@@ -40,17 +40,29 @@ export default function Event({ event }: EventProps) {
             <div className={classes.bigP}>
               <div className={classes.homePageIcons}>
                 <CalendarMonthIcon />
-                <p style={{ marginLeft: "0px" }}>{formattedDate}</p>
+                <p
+                  style={{
+                    marginLeft: "0px",
+                    fontSize: "13px",
+                    color: "#00003B",
+                  }}
+                >
+                  {formattedDate}
+                </p>
               </div>
               <div className={classes.homePageIcons}>
                 <LocationOnIcon />
-                <p style={{ marginLeft: "0px" }}>{event.city}</p>
+                <p style={{ marginLeft: "0px", fontSize: "13px" }}>
+                  {event.city}
+                </p>
               </div>
               <div className={classes.homePageIcons}>
                 <AccessTimeIcon />
-                <p style={{ marginLeft: "0px" }}>18:30</p>
+                <p style={{ marginLeft: "0px", fontSize: "13px" }}>18:30</p>
               </div>
             </div>
+
+            <hr></hr>
             <h3>{event.title}</h3>
             <h2 className={classes.creator}>{event.creatorUsername}</h2>
             <p className={classes.eventDesc} style={{ fontWeight: "normal" }}>
