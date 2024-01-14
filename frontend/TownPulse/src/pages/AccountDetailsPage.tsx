@@ -1,13 +1,8 @@
 import { ChangeEvent, useRef } from "react";
 import { useSubmit } from "react-router-dom";
-import {
-  getUserData,
-  getAccountTypeString,
-  saveUserData,
-} from "../util/Methods";
+import { getUserData, getAccountTypeString } from "../util/Methods";
 import { ProfilePictureRequest } from "../remote/request-types";
-import noProfilePicture from "../util/images/no_profile_picture.jpg";
-import classes from '../components/Profile.module.css';
+import classes from "../components/Profile.module.css";
 function AccountDetailsPage() {
   const imgKey = useRef(0);
   const userData = getUserData()!;
@@ -48,39 +43,34 @@ function AccountDetailsPage() {
     );
   }
 
-  let profileSrc = noProfilePicture;
-  if (userData.hasProfilePicture) {
-    profileSrc = `http://localhost:3000/profile/${userData.id}.jpg`;
-  }
-
   return (
     <div className={classes.bigDiv}>
-      
-    <div>
       <div>
-        <h2> {userData.username}</h2>
-      </div>
-      <div className={classes.secondDiv}>
-        
-      <div className={classes.labelDiv}>
-       <p className={classes.labelP}>Oras</p>
-       <p className={classes.labelText}>{userData.city}</p>
-      </div>
+        <div>
+          <h2> {userData.username}</h2>
+        </div>
+        <div className={classes.secondDiv}>
+          <div className={classes.labelDiv}>
+            <p className={classes.labelP}>Oras</p>
+            <p className={classes.labelText}>{userData.city}</p>
+          </div>
 
-      <div className={classes.labelDiv}>
-        <p className={classes.labelP}>Tip utilizator</p>
-        <p className={classes.labelText}> {getAccountTypeString(userData.accountType)}</p>
-      </div>
-
-      </div>
-      <div>
-        <label>Email: {userData.email}</label>
-      </div>
+          <div className={classes.labelDiv}>
+            <p className={classes.labelP}>Tip utilizator</p>
+            <p className={classes.labelText}>
+              {" "}
+              {getAccountTypeString(userData.accountType)}
+            </p>
+          </div>
+        </div>
+        <div>
+          <label>Email: {userData.email}</label>
+        </div>
       </div>
       <div>
         <img
           key={imgKey.current}
-          src={profileSrc}
+          src={`http://localhost:3000/profile/${userData.id}.jpg`}
           style={{ height: 150, width: 150 }}
         />
         <input
@@ -91,7 +81,6 @@ function AccountDetailsPage() {
 
         <button onClick={handlePhotoSave}>Save photo</button>
       </div>
-
     </div>
   );
 }
@@ -111,13 +100,6 @@ export const accountDetailsAction = async ({ request }) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(profilePicRequest),
   });
-
-  if (response.ok) {
-    const userData = getUserData()!;
-    userData.hasProfilePicture = true;
-
-    saveUserData(userData);
-  }
 
   return response;
 };
