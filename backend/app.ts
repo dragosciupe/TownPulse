@@ -25,12 +25,19 @@ import {
 import { PORT, MONGO_URL } from "./src/util";
 
 const app = express();
+const profileImagesPath = path.join(__dirname, "public", "profile");
 
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 app.use(express.static("public"));
 app.use("/images", express.static(path.join(__dirname, "public", "images")));
-app.use("/profile", express.static(path.join(__dirname, "public", "profile")));
+
+app.use("/profile", (req, res, next) => {
+  express.static(profileImagesPath)(req, res, (err) => {
+    console.log(err?.message);
+    res.sendFile(path.join(profileImagesPath, "no_profile_picture.jpg"));
+  });
+});
 
 app.post("/registerAccount", registerUser);
 app.post("/loginAccount", loginUser);
