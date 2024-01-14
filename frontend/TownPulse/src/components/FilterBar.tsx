@@ -23,20 +23,18 @@ type FilterFields = {
   sorting: string;
 };
 
-const eventFiltersInitialState: FilterFields = {
-  search: "",
-  type: "",
-  city: getUserData()?.city || "",
-  orderBy: OrderBy.DATE,
-  sorting: SortOrder.DESCENDING,
-};
-
-console.log(eventFiltersInitialState);
-
 export default function FilterBar({
   initialEvents,
   updateEvents,
 }: FilterBarProps) {
+  const eventFiltersInitialState: FilterFields = {
+    search: "",
+    type: "",
+    city: getUserData()?.city || "",
+    orderBy: OrderBy.DATE,
+    sorting: SortOrder.DESCENDING,
+  };
+
   const eventFilters = useRef(eventFiltersInitialState);
 
   //Trigger default filtering
@@ -54,6 +52,7 @@ export default function FilterBar({
 
   function filterEvents(): Array<HomePageEvent> {
     const curFields = eventFilters.current;
+    console.log(curFields);
     let events = initialEvents.filter(
       (event) =>
         event.title.includes(curFields.search) &&
