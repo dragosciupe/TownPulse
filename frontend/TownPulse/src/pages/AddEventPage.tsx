@@ -3,7 +3,7 @@ import PlacesAutocomplete from "../components/PlacesAutocomplete";
 import { ChangeEvent, useState } from "react";
 import { AddEventRequest, EventType } from "../util/Types";
 import { Form, json, redirect } from "react-router-dom";
-import { getUserData } from "../util/Methods";
+import { getUserData, getAuthToken } from "../util/Methods";
 import classes from "../components/AddEventPage.module.css";
 
 function AddEventPage() {
@@ -49,11 +49,17 @@ function AddEventPage() {
             <input id="titlu" type="text" name="titlu" required />
           </p>
           <p>
-            <label className={classes.addEvLabel} htmlFor="type">Tipul</label>
-            
+            <label className={classes.addEvLabel} htmlFor="type">
+              Tipul
+            </label>
+
             <select name="type" className={classes.addEventSelect}>
               {Object.values(EventType).map((eventType) => (
-                <option key={eventType} value={eventType} className={classes.optionStyle}>
+                <option
+                  key={eventType}
+                  value={eventType}
+                  className={classes.optionStyle}
+                >
                   {eventType}
                 </option>
               ))}
@@ -138,6 +144,7 @@ export async function action({ request }) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${getAuthToken()}`,
     },
     body: JSON.stringify(eventData),
   });

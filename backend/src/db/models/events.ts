@@ -1,6 +1,7 @@
 import mongoose, { Schema, SchemaType } from "mongoose";
 
 export interface PostComment {
+  authorId: string;
   author: string;
   date: number;
   message: string;
@@ -21,6 +22,7 @@ export interface EventModel {
 }
 
 const PostCommentSchema = new mongoose.Schema<PostComment>({
+  authorId: { type: String, required: true },
   author: { type: String, required: true },
   date: { type: Number, required: true },
   message: { type: String, required: true },

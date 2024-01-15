@@ -1,7 +1,7 @@
 import { type ReactNode } from "react";
 import Register from "../components/Register.tsx";
 import Login from "../components/Login.tsx";
-import { checkFieldForError } from "../util/Methods.ts";
+import { checkFieldForError, saveAuthToken } from "../util/Methods.ts";
 import { useSearchParams, json, redirect } from "react-router-dom";
 import {
   type LoginAccountRequest,
@@ -53,9 +53,14 @@ export async function action({ request }) {
       body: JSON.stringify(loginRequest),
     });
 
-    const parsedResponse = await response.json();
+    let parsedResponse: {
+      userData: UserData;
+      authToken: string;
+    } = await response.json();
     if (typeof parsedResponse === "object") {
-      saveUserData(parsedResponse as UserData);
+      saveUserData(parsedResponse.userData);
+      saveAuthToken(parsedResponse.authToken);
+      console.log(`Recieved jwt is ${parsedResponse.authToken}`);
       return redirect("/");
     }
 
