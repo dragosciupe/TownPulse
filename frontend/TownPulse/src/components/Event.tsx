@@ -65,9 +65,9 @@ export default function Event({ event }: EventProps) {
 
             <hr></hr>
             <div className={classes.divProfileImg}>
-              <div style={{ height: "25px"}}>
+              <div style={{ height: "30px",width:'33px'}}>
                 <img
-                  src={noProfilePicture}
+                  src={`http://localhost:3000/profile/${event.creatorId}.jpg`}
                   alt="nu e poza"
                   style={{ height: "100%",borderRadius:'50px'  }}
                   

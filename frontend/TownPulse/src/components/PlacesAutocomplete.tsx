@@ -21,9 +21,12 @@ export default function PlacesAutocomplete({ onSelect }) {
     setValue,
     suggestions: { status, data },
   } = usePlacesAutocomplete();
-
+function handleSelect(address){
+  onSelect(address);
+  setValue(address,false);
+}
   return (
-    <Combobox onSelect={onSelect}>
+    <Combobox onSelect={handleSelect}>
       <ComboboxInput
         value={value}
         onChange={(event) => setValue(event.target.value)}
