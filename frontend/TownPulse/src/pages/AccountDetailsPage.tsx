@@ -1,6 +1,10 @@
 import { ChangeEvent, useRef } from "react";
 import { useSubmit } from "react-router-dom";
-import { getUserData, getAccountTypeString } from "../util/Methods";
+import {
+  getUserData,
+  getAccountTypeString,
+  getAuthToken,
+} from "../util/Methods";
 import { ProfilePictureRequest } from "../remote/request-types";
 import classes from "../components/Profile.module.css";
 function AccountDetailsPage() {
@@ -97,7 +101,10 @@ export const accountDetailsAction = async ({ request }) => {
 
   const response = await fetch("http://localhost:3000/changeProfilePicture", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
     body: JSON.stringify(profilePicRequest),
   });
 

@@ -6,7 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Mapp from "../components/Map";
 import { useState } from "react";
 import { useLoaderData, useSubmit } from "react-router-dom";
-import { formatDateInCustomFormat, getUserData } from "../util/Methods";
+import {
+  formatDateInCustomFormat,
+  getAuthToken,
+  getUserData,
+} from "../util/Methods";
 import EventComments from "../components/EventComments.tsx";
 import { EventActionRequest } from "../remote/request-types.ts";
 import IconButton from "@mui/material/IconButton";
@@ -174,7 +178,10 @@ export const detailsPageAction = async ({ request }) => {
 
   const response = await fetch(`http://localhost:3000/${urlEndpoint}`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
     body: payloadToSend,
   });
 
@@ -187,7 +194,12 @@ export const eventDetailsLoader = async ({ params }) => {
   const paramsToSend = new URLSearchParams({ eventId: id }).toString();
 
   const response = await fetch(
-    `http://localhost:3000/getEvent?${paramsToSend}`
+    `http://localhost:3000/getEvent?${paramsToSend}`,
+    {
+      headers: {
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+    }
   );
 
   return response;

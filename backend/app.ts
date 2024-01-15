@@ -24,7 +24,7 @@ import {
 } from "./src/route_methods/event-routes";
 
 import { PORT, MONGO_URL } from "./src/util";
-import { cookieJwtAuth } from "./src/route_methods/middleware/cookieJwtAuth";
+import { jwtAuthMiddleware } from "./src/route_methods/middleware/jwtAuthMiddleware";
 
 const app = express();
 const profileImagesPath = path.join(__dirname, "public", "profile");
@@ -44,23 +44,33 @@ app.use("/profile", (req, res, next) => {
 
 app.post("/registerAccount", registerUser);
 app.post("/loginAccount", loginUser);
-app.post("/changeProfilePicture", changeProfilePicture);
-app.post("/upgradeAccount", upgradeAccountRequest);
-app.post("/acceptAccountUpgrade", (req, res) =>
+app.post("/changeProfilePicture", jwtAuthMiddleware, changeProfilePicture);
+app.post("/upgradeAccount", jwtAuthMiddleware, upgradeAccountRequest);
+app.post("/acceptAccountUpgrade", jwtAuthMiddleware, (req, res) =>
   accountUpgradeRequestAction(req, res, "accept")
 );
-app.post("/rejectAccountUpgrade", (req, res) =>
+app.post("/rejectAccountUpgrade", jwtAuthMiddleware, (req, res) =>
   accountUpgradeRequestAction(req, res, "reject")
 );
-app.get("/accountUpgradeRequests", getAccountUpgradeRequests);
-app.post("/addEvent", addEvent);
-app.post("/likeEvent", (req, res) => eventAction(req, res, "likes"));
-app.post("/joinEvent", (req, res) => eventAction(req, res, "participants"));
-app.post("/addComment", addComment);
-app.post("/saveEvent", (req, res) => eventAction(req, res, "save"));
+app.get(
+  "/accountUpgradeRequests",
+  jwtAuthMiddleware,
+  getAccountUpgradeRequests
+);
+app.post("/addEvent", jwtAuthMiddleware, addEvent);
+app.post("/likeEvent", jwtAuthMiddleware, (req, res) =>
+  eventAction(req, res, "likes")
+);
+app.post("/joinEvent", jwtAuthMiddleware, (req, res) =>
+  eventAction(req, res, "participants")
+);
+app.post("/addComment", jwtAuthMiddleware, addComment);
+app.post("/saveEvent", jwtAuthMiddleware, (req, res) =>
+  eventAction(req, res, "save")
+);
 app.get("/getAllEvents", getEvents);
-app.get("/getEvent", getEventById);
-app.get("/getSavedEvents", getSavedEvents);
+app.get("/getEvent", jwtAuthMiddleware, getEventById);
+app.get("/getSavedEvents", jwtAuthMiddleware, getSavedEvents);
 
 app.listen(PORT, () => {
   console.log("Server started");

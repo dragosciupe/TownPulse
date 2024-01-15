@@ -4,6 +4,7 @@ import {
   MAX_USERNAME_LENGTH,
   MIN_PASSWORD_LENGTH,
   USER_DATA_KEY,
+  AUTH_TOKEN_KEY,
 } from "../util/Constants";
 
 import {
@@ -75,6 +76,14 @@ export function getUserData(): UserData | null {
 
 export function deleteUserData() {
   localStorage.removeItem(USER_DATA_KEY);
+}
+
+export function saveAuthToken(token: string) {
+  localStorage.setItem(AUTH_TOKEN_KEY, token);
+}
+
+export function getAuthToken(): string {
+  return localStorage.getItem(AUTH_TOKEN_KEY)!;
 }
 
 export const authLoader: LoaderFunction<UserData> = () => {

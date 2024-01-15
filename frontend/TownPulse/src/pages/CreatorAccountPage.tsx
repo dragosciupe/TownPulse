@@ -5,7 +5,7 @@ import {
   json,
 } from "react-router-dom";
 import { AccountType, type UserData } from "../util/Types";
-import { getUserData } from "../util/Methods";
+import { getUserData, getAuthToken } from "../util/Methods";
 import {
   AccountUpgradeRequest,
   type RequestWithAccountId,
@@ -54,7 +54,10 @@ export async function creatorRequestAction({ request }) {
 
   const response = await fetch(`http://localhost:3000/${urlEndpoint}`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
     body: JSON.stringify(requestBody),
   });
 
@@ -76,7 +79,12 @@ export const creatorRequestsLoader: LoaderFunction<UserData> = async () => {
   const accountParams = new URLSearchParams(accountIdParams).toString();
 
   const response = await fetch(
-    `http://localhost:3000/accountUpgradeRequests?${accountParams}`
+    `http://localhost:3000/accountUpgradeRequests?${accountParams}`,
+    {
+      headers: {
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+    }
   );
 
   return response;

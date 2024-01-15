@@ -99,7 +99,10 @@ export const loginUser = async (req: Request, res: Response) => {
     { expiresIn: "1 days" }
   );
 
-  res.cookie("token", token).json(userDataResponse);
+  res.json({
+    userData: userDataResponse,
+    authToken: token,
+  });
 };
 
 export const changeProfilePicture = async (req: Request, res: Response) => {

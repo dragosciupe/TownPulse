@@ -2,7 +2,7 @@ import { useLoaderData, LoaderFunction } from "react-router-dom";
 import { type Event as EventModel } from "../util/Types";
 import Event from "../components/Event.tsx";
 import classes from "../components/HomePage.module.css";
-import { getHomePageEvents, getUserData } from "../util/Methods";
+import { getHomePageEvents, getUserData, getAuthToken } from "../util/Methods";
 
 function SavedEventsPage() {
   const initialEvents = useLoaderData() as Array<EventModel>;
@@ -30,7 +30,12 @@ export const savedEventsLoader: LoaderFunction<
   }).toString();
 
   const response = await fetch(
-    `http://localhost:3000/getSavedEvents?${paramsToSend}`
+    `http://localhost:3000/getSavedEvents?${paramsToSend}`,
+    {
+      headers: {
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+    }
   );
 
   return response;
