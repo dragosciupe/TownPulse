@@ -50,6 +50,7 @@ export type UserData = {
   city: string;
   email: string;
   accountType: AccountType;
+  savedEvents: Array<string>;
 };
 
 export type PostComment = {
@@ -65,6 +66,7 @@ export type Event = {
   creatorId: string;
   eventType: EventType;
   title: string;
+  startTime: string;
   duration: number;
   date: number;
   city: string;
@@ -81,6 +83,7 @@ export type HomePageEvent = {
   creatorId: string;
   eventType: EventType;
   title: string;
+  startTime: string;
   duration: number;
   date: number;
   city: string;
@@ -94,6 +97,7 @@ export type AddEventRequest = {
   creatorUsername: string;
   eventType: EventType;
   title: string;
+  startTime: string;
   duration: number;
   date: number;
   description: string;

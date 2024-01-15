@@ -53,7 +53,6 @@ export const registerUser = async (req: Request, res: Response) => {
     email: registerRequest.email,
     accountType: AccountType.NORMAL,
     savedEvents: Array(),
-    hasProfilePicture: false,
   };
 
   await addNewUser(userModel);
@@ -91,6 +90,7 @@ export const loginUser = async (req: Request, res: Response) => {
     city: currentUser.city,
     email: currentUser.email,
     accountType: currentUser.accountType,
+    savedEvents: currentUser.savedEvents,
   };
 
   const token = jwt.sign(

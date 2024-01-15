@@ -78,6 +78,19 @@ export function deleteUserData() {
   localStorage.removeItem(USER_DATA_KEY);
 }
 
+export function modifySavedEvents(eventId: string) {
+  const userData = getUserData()!;
+  console.log(eventId);
+  if (userData.savedEvents.find((ev) => ev === eventId)) {
+    userData.savedEvents = userData.savedEvents.filter((ev) => ev !== eventId);
+  } else {
+    userData.savedEvents.push(eventId);
+  }
+
+  console.log(userData);
+  saveUserData(userData);
+}
+
 export function saveAuthToken(token: string) {
   localStorage.setItem(AUTH_TOKEN_KEY, token);
 }

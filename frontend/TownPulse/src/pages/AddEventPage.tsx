@@ -66,6 +66,12 @@ function AddEventPage() {
             </select>
           </p>
           <p>
+            <label className={classes.addEvLabel} htmlFor="start_time">
+              Ora incepere
+            </label>
+            <input id="start_time" type="time" name="start_time" required />
+          </p>
+          <p>
             <label className={classes.addEvLabel} htmlFor="durata">
               Durata
             </label>
@@ -132,6 +138,7 @@ export async function action({ request }) {
     creatorUsername: userName,
     eventType: data.get("type"),
     title: data.get("titlu"),
+    startTime: data.get("start_time"),
     duration: data.get("durata"),
     date: convertDateToTimestamp(data.get("data")),
     description: data.get("descriere"),

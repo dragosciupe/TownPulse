@@ -10,6 +10,7 @@ import {
   formatDateInCustomFormat,
   getAuthToken,
   getUserData,
+  modifySavedEvents,
 } from "../util/Methods";
 import EventComments from "../components/EventComments.tsx";
 import { EventActionRequest } from "../remote/request-types.ts";
@@ -18,8 +19,6 @@ import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 export default function DetailPage() {
-
-  const [isActiveSave, setIsActiveSave] = useState(false);
   const curEvent = useLoaderData() as Event;
   const triggerAction = useSubmit();
   let eventFormat: string;
@@ -43,19 +42,24 @@ export default function DetailPage() {
     eventFormat = `Eveniment ${curEvent.eventType}`;
   }
   const userData = getUserData()!;
-  let isLiked: string | undefined = curEvent.likes.find((accID)=>accID===userData.id)
-  
-  let isJoining:string | undefined = curEvent.participants.find((accID)=>accID===userData.id)
+  let isLiked: string | undefined = curEvent.likes.find(
+    (accID) => accID === userData.id
+  );
+
+  let isJoining: string | undefined = curEvent.participants.find(
+    (accID) => accID === userData.id
+  );
+
+  let isSaved: string | undefined = userData.savedEvents.find(
+    (ev) => ev === curEvent.id
+  );
   const handleLikeClick = () => {
-    
     handleEventInteraction("like");
   };
   const handleParticipClick = () => {
-   
     handleEventInteraction("join");
   };
   const handleSaveClick = () => {
-    setIsActiveSave(!isActiveSave);
     handleEventInteraction("save");
   };
 
@@ -91,7 +95,9 @@ export default function DetailPage() {
               icon={faCalendar}
               style={{ paddingRight: "10px", paddingBottom: "5px" }}
             />
-            <p>{formatDateInCustomFormat(curEvent.date)}</p>
+            <p>
+              {formatDateInCustomFormat(curEvent.date)}, {curEvent.startTime}
+            </p>
           </div>
           <div className={classes.iconDetailDiv}>
             <FontAwesomeIcon icon={faClock} style={{ paddingRight: "10px" }} />
@@ -130,7 +136,7 @@ export default function DetailPage() {
             <IconButton>
               <BookmarkIcon
                 className={`${classes.detailPageBtn} ${
-                  isActiveSave ? classes.active : ""
+                  isSaved ? classes.active : ""
                 }`}
                 style={{ width: "110px" }}
                 onClick={handleSaveClick}
@@ -176,6 +182,8 @@ export const detailsPageAction = async ({ request }) => {
   } else if (mode === "join") {
     urlEndpoint = "joinEvent";
   } else {
+    const parsedPayload = JSON.parse(payloadToSend) as EventActionRequest;
+    modifySavedEvents(parsedPayload.eventId);
     urlEndpoint = "saveEvent";
   }
 
