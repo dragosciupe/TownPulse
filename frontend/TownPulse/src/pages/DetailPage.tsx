@@ -18,8 +18,7 @@ import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 export default function DetailPage() {
-  const [isActiveLike, setIsActiveLike] = useState(false);
-  const [isActiveParticip, setIsActiveparticip] = useState(false);
+
   const [isActiveSave, setIsActiveSave] = useState(false);
   const curEvent = useLoaderData() as Event;
   const triggerAction = useSubmit();
@@ -43,12 +42,16 @@ export default function DetailPage() {
   } else {
     eventFormat = `Eveniment ${curEvent.eventType}`;
   }
+  const userData = getUserData()!;
+  let isLiked: string | undefined = curEvent.likes.find((accID)=>accID===userData.id)
+  
+  let isJoining:string | undefined = curEvent.participants.find((accID)=>accID===userData.id)
   const handleLikeClick = () => {
-    setIsActiveLike(!isActiveLike);
+    
     handleEventInteraction("like");
   };
   const handleParticipClick = () => {
-    setIsActiveparticip(!isActiveParticip);
+   
     handleEventInteraction("join");
   };
   const handleSaveClick = () => {
@@ -104,7 +107,7 @@ export default function DetailPage() {
               <ThumbUpAltIcon
                 style={{ width: "90px" }}
                 className={`${classes.detailPageBtn} ${
-                  isActiveLike ? classes.active : ""
+                  isLiked ? classes.active : ""
                 }`}
                 onClick={handleLikeClick}
               ></ThumbUpAltIcon>
@@ -115,7 +118,7 @@ export default function DetailPage() {
             <IconButton>
               <AddCircleOutlineIcon
                 className={`${classes.detailPageBtn} ${
-                  isActiveParticip ? classes.active : ""
+                  isJoining ? classes.active : ""
                 }`}
                 style={{ width: "90px" }}
                 onClick={handleParticipClick}
