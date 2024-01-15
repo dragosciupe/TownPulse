@@ -251,6 +251,7 @@ export const eventAction = async (
 export const addComment = async (req: Request, res: Response) => {
   const addCommentRequest: AddCommentRequest = {
     eventId: req.body.eventId,
+    authorId: req.body.authorId,
     author: req.body.author,
     date: req.body.date,
     message: req.body.message,
@@ -264,6 +265,7 @@ export const addComment = async (req: Request, res: Response) => {
   }
 
   const commentToAdd: PostComment = {
+    authorId: addCommentRequest.authorId,
     author: addCommentRequest.author,
     date: addCommentRequest.date,
     message: addCommentRequest.message,

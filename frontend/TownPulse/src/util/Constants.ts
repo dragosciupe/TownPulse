@@ -15,7 +15,9 @@ import muzeu from "./images/muzeu.jpg";
 import petrecere from "./images/petrecere.jpg";
 import pool from "./images/poolparty.jpg";
 import roof from "./images/rooftop.jpg";
+
 export const USER_DATA_KEY = "userdata";
+export const AUTH_TOKEN_KEY = "authtoken";
 
 export const EVENTS = [
   {
