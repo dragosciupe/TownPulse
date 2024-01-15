@@ -4,7 +4,7 @@ import { type HomePageEvent } from "../util/Types";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import noProfilePicture from "../util/images/no_profile_picture.jpg";
+
 type EventProps = {
   event: HomePageEvent;
 };

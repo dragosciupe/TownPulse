@@ -116,6 +116,7 @@ export async function action({ request }) {
   const userName = userData!.username;
   const convertDateToTimestamp = (dateString: string): number => {
     const dateObject = new Date(dateString + "T00:00:00Z");
+    dateObject.setUTCHours(2, 0, 0, 0);
     const timestamp = dateObject.getTime();
     return timestamp;
   };

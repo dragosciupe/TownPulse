@@ -1,0 +1,12 @@
+.title{
+    text-align: center;
+    font-family: 'Montserrat', sans-serif ;
+}
+.calendarDiv{
+    display: flex;
+    justify-content: center;
+}
+.active{
+    background-color: red;
+    color:rgb(255, 255, 255);
+}
