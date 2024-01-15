@@ -71,7 +71,7 @@ export default function DetailPage() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           width: "100%",
-          height: "450px",
+          height: "600px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",

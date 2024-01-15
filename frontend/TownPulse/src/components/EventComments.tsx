@@ -43,11 +43,11 @@ function EventComments({ eventId, comments }: EventCommentsProps) {
           {comments.map((com) => (
             <li key={com.date} className={classes.commUl}>
               <div style={{display:'flex',alignItems:'center'}}>
-               <div style={{ height: "30px",width:'33px'}}>
+               <div style={{ height: "30px",width:'33px',marginRight:'5px'}}>
               <img
                   src={`http://localhost:3000/profile/${com.authorId}.jpg`}
                   alt="nu e poza"
-                  style={{ height: "100%",borderRadius:'50px'  }}
+                  style={{ height: "100%",width:"100%",borderRadius:'50px'  }}
                   
                 />
               </div>
