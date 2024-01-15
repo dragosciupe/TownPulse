@@ -63,23 +63,31 @@ function AccountDetailsPage() {
             </p>
           </div>
         </div>
-        <div>
-          <label>Email: {userData.email}</label>
+        <div style={{ marginLeft: "7px" }}>
+          <p className={classes.labelP}>Email</p>
+          <p className={classes.labelText}>{userData.email}</p>
         </div>
       </div>
-      <div>
-        <img
-          key={imgKey.current}
-          src={`http://localhost:3000/profile/${userData.id}.jpg`}
-          style={{ height: 150, width: 150 }}
-        />
-        <input
-          type="file"
-          accept=".jpg, .jpeg, .png"
-          onChange={handlePhotoChange}
-        />
+      <div  >
+        <div className={classes.imgDiv}>
+          <img
+            key={imgKey.current}
+            src={`http://localhost:3000/profile/${userData.id}.jpg`}
+            style={{ height: "100%", width: "100%", borderRadius: 20 }}
+          />
+        </div>
+        <div >
+          <input
+            type="file"
+            accept=".jpg, .jpeg, .png"
+            onChange={handlePhotoChange}
+            className={classes.imgDivInput}
+          />
 
-        <button onClick={handlePhotoSave}>Save photo</button>
+          <button className={classes.imgDivSaveBtn} onClick={handlePhotoSave}>
+            Save photo
+          </button>
+        </div>
       </div>
     </div>
   );

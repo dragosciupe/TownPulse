@@ -29,10 +29,13 @@
     transition: transform 0.3s ease-in-out;
 
   }
+  .eventLink a:visited{
+    color: #00003B;
+  }
   .creator{
     font-size: 0.9rem;
     color: rgb(91, 90, 90);
-    margin-left: 25px;
+    margin-left: 5px;
   }
   .event img {
     width: 100%;
@@ -80,7 +83,7 @@
     text-align: left;
     color: rgb(0, 0, 0);
     margin-left: 25px;
-    margin-bottom: -5px;
+    margin-top: -2px;
   }
   
   .event p {
@@ -88,7 +91,15 @@
     font-size: 1rem;
     font-weight: bold;
   }
-  
+  .divProfileImg{
+    display:flex;
+    align-items: center;
+    margin-left: 25px;
+  }
+  .divLogo{
+    
+    margin-left: 25px;
+  }
   .lastP
   {
     text-align: left;
@@ -97,6 +108,7 @@
   }
   .Link{
     text-decoration: none;
+
   }
   .eventDesc {
     font-weight: normal;
@@ -113,3 +125,127 @@
     background-color: var(--color-gray-700);
     z-index: -1;
   }
+  
+/* Media Query for Small Screens */
+@media screen and (max-width: 40rem) {
+  .event {
+    width: 100%; /* Set width to 100% for small screens, stacking events in a column */
+    margin: 0 0 2rem; /* Adjust margin for small screens */
+  }
+}
+
+/* Media Query for Medium Screens */
+@media screen and (min-width: 40rem) and (max-width: 60rem) {
+  .event {
+    width: 48%; /* Set width to 48% for medium screens, displaying events in two columns */
+    margin: 0 0.7rem 2rem; /* Adjust margin for medium screens */
+  }
+}
+
+.eventLink {
+  height: 100%;
+  justify-content: space-between;
+  text-decoration: none;
+  transition: transform 0.3s ease-in-out;
+}
+
+.eventLink a:visited {
+  color: #00003B;
+}
+
+.creator {
+  font-size: 0.9rem;
+  color: rgb(91, 90, 90);
+  margin-left: 5px;
+}
+
+.event img {
+  width: 100%;
+  height: 20rem;
+  object-fit: cover;
+}
+
+.bigP {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  color: #00003B;
+}
+
+.verticalLine {
+  border-left: 1px solid #000;
+  height: 100%;
+  margin: 0 10px;
+}
+
+.homePageIcons {
+  display: flex;
+  align-items: center;
+}
+
+.likesDiv {
+  display: flex;
+  justify-content: space-around;
+  font-size: smaller;
+  font-weight: bold;
+}
+
+.bigP p {
+  margin: 0;
+  padding: 0;
+}
+
+.event h3 {
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: left;
+  color: rgb(0, 0, 0);
+  margin-left: 25px;
+  margin-top: -2px;
+}
+
+.event p {
+  margin: 0rem 1rem 0rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.divProfileImg {
+  display: flex;
+  align-items: center;
+  margin-left: 25px;
+}
+
+.divLogo {
+  margin-left: 25px;
+}
+
+.lastP {
+  text-align: left;
+  color: grey;
+  padding-left: 30px;
+}
+
+.Link {
+  text-decoration: none;
+}
+
+.eventDesc {
+  font-weight: normal;
+  padding-left: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.eventLink:hover {
+  transform: scale(1.02);
+  background-color: var(--color-gray-700);
+  z-index: -1;
+}

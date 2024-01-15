@@ -14,7 +14,7 @@ export default function Mapp({ lat, lng }: MapProps) {
     <>
       <APIProvider apiKey="AIzaSyDxQPtW3H3CMap8ojzAP7mLEcSS-yy9YnQ">
         <div style={{ height: "100vh" }}>
-          <Map zoom={9} center={position}>
+          <Map zoom={13} center={position}>
             <Marker position={position2}></Marker>
           </Map>
         </div>
