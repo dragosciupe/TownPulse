@@ -53,6 +53,7 @@ export type UserData = {
 };
 
 export type PostComment = {
+  authorId: string;
   author: string;
   date: number;
   message: string;

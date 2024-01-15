@@ -1,4 +1,5 @@
 import classes from "../components/DeatilPage.module.css";
+import classes2 from "./HomePage.module.css";
 import { UserData, type PostComment } from "../util/Types";
 import { formatDateInCustomFormat } from "../util/Methods";
 import { useRef } from "react";
@@ -21,6 +22,7 @@ function EventComments({ eventId, comments }: EventCommentsProps) {
   function addComment() {
     const commentRequest: AddCommentRequest = {
       eventId: eventId,
+      authorId:userData.id,
       author: userData.username,
       date: new Date().getTime(),
       message: commentText.current?.value || "",
@@ -40,7 +42,17 @@ function EventComments({ eventId, comments }: EventCommentsProps) {
         <ul>
           {comments.map((com) => (
             <li key={com.date} className={classes.commUl}>
+              <div style={{display:'flex',alignItems:'center'}}>
+               <div style={{ height: "30px",width:'33px'}}>
+              <img
+                  src={`http://localhost:3000/profile/${com.authorId}.jpg`}
+                  alt="nu e poza"
+                  style={{ height: "100%",borderRadius:'50px'  }}
+                  
+                />
+              </div>
               <h3>{com.author}</h3>
+              </div>
               <p>{formatDateInCustomFormat(com.date)}</p>
               <p>{com.message}</p>
             </li>

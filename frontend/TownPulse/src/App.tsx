@@ -2,7 +2,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import RootLayout from "./pages/RootLayout.tsx";
 import HomePage, { eventsLoader } from "./pages/HomePage.tsx";
-import EventsCalendarPage from "./pages/EventsCalendarPage.tsx";
+import EventsCalendarPage,{ eventsLoader as calendarEventLoader } from "./pages/EventsCalendarPage.tsx";
 import AddEventPage, {
   action as addEventAction,
 } from "./pages/AddEventPage.tsx";
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
         loader: eventDetailsLoader,
         action: detailsPageAction,
       },
-      { path: "/eventsCalendar", element: <EventsCalendarPage /> },
+      { path: "/eventsCalendar", element: <EventsCalendarPage />,loader:calendarEventLoader },
       { path: "/addEvent", element: <AddEventPage />, action: addEventAction },
       {
         path: "/profile",
