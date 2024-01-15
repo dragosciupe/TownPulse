@@ -94,6 +94,7 @@ export async function action({ request }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(registerRequest),
+      credentials: "include",
     });
 
     const parsedResponse = await response.text();

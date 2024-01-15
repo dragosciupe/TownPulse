@@ -16,7 +16,8 @@ import {
   updateProfilePictureStatus,
 } from "../db/models/user";
 
-import { isRequestValid, AccountType } from "../util";
+import { isRequestValid, AccountType, SUPER_SECRET_PASSWORD } from "../util";
+import jwt from "jsonwebtoken";
 
 export const registerUser = async (req: Request, res: Response) => {
   const registerRequest: RegisterAccountRequest = {
@@ -56,7 +57,8 @@ export const registerUser = async (req: Request, res: Response) => {
   };
 
   await addNewUser(userModel);
-  res.send("Account registered succesfully");
+
+  res.send("Account registered successfully");
 };
 
 export const loginUser = async (req: Request, res: Response) => {
@@ -90,7 +92,14 @@ export const loginUser = async (req: Request, res: Response) => {
     email: currentUser.email,
     accountType: currentUser.accountType,
   };
-  res.json(userDataResponse);
+
+  const token = jwt.sign(
+    { id: userDataResponse.id, username: userDataResponse.username },
+    SUPER_SECRET_PASSWORD,
+    { expiresIn: "1 days" }
+  );
+
+  res.cookie("token", token).json(userDataResponse);
 };
 
 export const changeProfilePicture = async (req: Request, res: Response) => {

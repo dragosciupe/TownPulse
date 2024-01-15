@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import path from "path";
+import cookieParser from "cookie-parser";
 
 import {
   registerUser,
@@ -23,11 +24,13 @@ import {
 } from "./src/route_methods/event-routes";
 
 import { PORT, MONGO_URL } from "./src/util";
+import { cookieJwtAuth } from "./src/route_methods/middleware/cookieJwtAuth";
 
 const app = express();
 const profileImagesPath = path.join(__dirname, "public", "profile");
 
 app.use(cors());
+app.use(cookieParser());
 app.use(express.json({ limit: "50mb" }));
 app.use(express.static("public"));
 app.use("/images", express.static(path.join(__dirname, "public", "images")));
