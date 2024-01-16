@@ -4,7 +4,6 @@ import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Mapp from "../components/Map";
-import { useState } from "react";
 import { useLoaderData, useSubmit } from "react-router-dom";
 import {
   formatDateInCustomFormat,
@@ -71,7 +70,7 @@ export default function DetailPage() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           width: "100%",
-          height: "600px",
+          height: "550px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",

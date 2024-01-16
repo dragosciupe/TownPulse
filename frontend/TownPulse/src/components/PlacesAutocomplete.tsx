@@ -21,10 +21,10 @@ export default function PlacesAutocomplete({ onSelect }) {
     setValue,
     suggestions: { status, data },
   } = usePlacesAutocomplete();
-function handleSelect(address){
-  onSelect(address);
-  setValue(address,false);
-}
+  function handleSelect(address) {
+    onSelect(address);
+    setValue(address, false);
+  }
   return (
     <Combobox onSelect={handleSelect}>
       <ComboboxInput
