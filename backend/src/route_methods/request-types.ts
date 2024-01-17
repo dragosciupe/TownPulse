@@ -26,6 +26,7 @@ export type AddEventRequest = {
   creatorUsername: string;
   eventType: EventType;
   title: string;
+  startTime: string;
   duration: number;
   date: number;
   description: string;

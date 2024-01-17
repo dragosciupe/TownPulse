@@ -59,18 +59,19 @@ export default function Event({ event }: EventProps) {
               </div>
               <div className={classes.homePageIcons}>
                 <AccessTimeIcon />
-                <p style={{ marginLeft: "0px", fontSize: "13px" }}>18:30</p>
+                <p style={{ marginLeft: "0px", fontSize: "13px" }}>
+                  {event.startTime}
+                </p>
               </div>
             </div>
 
             <hr></hr>
             <div className={classes.divProfileImg}>
-              <div style={{ height: "30px",width:'33px'}}>
+              <div style={{ height: "30px", width: "33px" }}>
                 <img
                   src={`http://localhost:3000/profile/${event.creatorId}.jpg`}
                   alt="nu e poza"
-                  style={{ height: "100%",borderRadius:'50px'  }}
-                  
+                  style={{ height: "100%", borderRadius: "50px" }}
                 />
               </div>
               <h2 className={classes.creator}>{event.creatorUsername}</h2>
