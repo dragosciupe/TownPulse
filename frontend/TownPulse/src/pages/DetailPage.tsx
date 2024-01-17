@@ -1,4 +1,4 @@
-import { type Event } from "../util/Types";
+import { UserData, type Event } from "../util/Types";
 import classes from "../components/DeatilPage.module.css";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
